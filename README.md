@@ -1,4 +1,10 @@
 # AutoMech
 Debugger for combustion engines
 
-## a
+## Backend
+
+C++ REST api (crow?)
+
+## Frontend 
+
+HTML/JS
