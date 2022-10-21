@@ -1,0 +1,107 @@
+body {
+    background: #D3D3D3;
+}
+
+.title_text {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 400%;
+    color: rgb(255, 80, 71);
+    text-align: center;
+}
+
+h2 {
+    font-size: 140%;
+    color: black;
+    display:inline-block;
+}
+
+.navbar {
+    background: #999999;
+    height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.logo img {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: auto;
+    align-items: center;
+    size: auto;
+    width: 50%;
+    size:100%;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 40%;
+    width: 50%;
+}
+
+.left__box {
+    float: left;
+    width: 40%;
+    padding-left: 5%;
+    margin:0px;
+}
+
+.left__box h3 {
+    display:inline-block;
+}
+
+.left__box p { 
+    display:inline-block;
+}
+
+.left__container {
+    border:1px solid black;
+}
+
+.engcfgform {
+    width: 55%;
+    position:relative;
+    display:inline-block;
+}
+
+.engcfgform select {
+    font-size: 16px;
+}
+
+.orderform {
+     width: 55%;
+    position:relative;
+    display:inline-block;
+}
+
+.orderform select {
+    font-size: 16px;
+}
+
+.right__box {
+    float: right;
+    width: 40%;
+    padding-right: 5%;
+    margin:0px;
+}
+
+.waveformcontainer{
+    border:1px solid black;
+    background-color: grey;
+}
+
+.waveformcontainer h1 {
+    font-size:100px;
+}
