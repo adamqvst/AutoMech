@@ -4,12 +4,10 @@ import audioop
 
 CHUNK = 1024  # Record in chunks of 1024 samples
 FORMAT = pyaudio.paInt16  # 16 bits per sample
-CHANNELS = 2
+CHANNELS = 1
 RATE = 44100  # Record at 44100 samples per second
 
 p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
-print('Recording')
 
 stream = p.open(format=FORMAT,
                 channels=CHANNELS,
@@ -18,7 +16,7 @@ stream = p.open(format=FORMAT,
                 input=True)
 
 frames = []  # Initialize array to store frames
-volume_level = []  # Array to store volume level
+volume_level = []  # Array to store volume level (for visualization purpose)
 
 while True:
             
@@ -28,8 +26,7 @@ while True:
         volume = audioop.rms(data, 2)
         volume_level.append(volume)
 
-        #print(volume)
-        print(data)
+        print(volume) # Print volume level to console for visualization purpose
 
         # Check for quit command
         if keyboard.is_pressed('q'):
