@@ -3,7 +3,7 @@ Debugger for combustion engines
 
 ## Backend
 
-C++ REST api (crow?)
+Python + Django
 
 ## Frontend 
 
