@@ -23,27 +23,28 @@
             <center><h2>MEASUREMENTS</h2> </center>
             <div class="left__container">
                 <h3>RUNTIME (seconds): </h3>
-                <p id="runtime"></p>
+                <p id="runtime">0</p>
                 <br>
                 <h3>ENGINE SPEED (rpm): </h3>
-                <p id="rpm"></p>
+                <p id="rpm">0</p>
                 <br>
                 <h3>TOTAL MISFIRES: </h3>
-                <p id="totmisfires"></p>
+                <p id="totmisfires">0</p>
                 <br>
                 <h3>CYL-1:</h4>
-                <p id="misfires1"></p>
+                <p id="misfires1">0</p>
                 <br>
                 <h3>CYL-2:</h4>
-                <p id="misfires2"></p>
+                <p id="misfires2">0</p>
                 <br>
                 <h3>CYL-3:</h4>
-                <p id="misfires3"></p>
+                <p id="misfires3">0</p>
                 <br>
                 <h3>CYL-4:</h4>
-                <p id="misfires4"></p>
+                <p id="misfires4">0</p>
                 <br>
-                <button onclick="runtimeUpdate(), rpmUpdate(), getMisfireTot(), getMisfire('misfires1', cyl1), getMisfire('misfires2', cyl2), getMisfire('misfires3', cyl3), getMisfire('misfires4', cyl4)">REFRESH (placeholder)</button>
+                <button id="start" onclick="disableStartBtn(), runtimeCount(), rpmUpdate(), getMisfireTot(), getMisfire('misfires1', cyl1), getMisfire('misfires2', cyl2), getMisfire('misfires3', cyl3), getMisfire('misfires4', cyl4)">START</button>
+                <button id="stop" onclick="stop()">STOP</button>
             </div>
         </div>
 
