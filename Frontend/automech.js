@@ -30,10 +30,6 @@ function runtime(){
 
 function stop(){
     clearInterval(runtimeUpdate);
-    runtimeUpdate=null;
-    while (runtimeUpdate!== null){
-        runtimeUpdate = null;
-    }
     document.getElementById('runtime').innerHTML = 0;
     document.getElementById('rpm').innerHTML = 0;
     document.getElementById('totmisfires').innerHTML = 0;
