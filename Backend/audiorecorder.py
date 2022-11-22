@@ -19,7 +19,7 @@ frames = []  # Initialize array to store frames
 volume_level = []  # Array to store volume level (for visualization purpose)
 
 while True:
-            
+
         # Read a chunk of data from the stream
         data = stream.read(CHUNK)
         frames.append(data)
@@ -30,9 +30,9 @@ while True:
 
         # Check for quit command
         if keyboard.is_pressed('q'):
-            
+
             stream.stop_stream()
             stream.close()
             p.terminate()
-            
+
             break
