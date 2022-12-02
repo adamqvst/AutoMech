@@ -45,6 +45,20 @@ function disableStartBtn(){
     document.getElementById("start").disabled = true;
 }
 
+function handle_diagnostics_data(data) {
+
+    console.log("rpm: " + data.rpm + " | num ints: " + data.wave.length);
+
+    if (data !== undefined) {
+        rpmUpdate(data.rpm);
+    }
+
+    if (running_diagnostics) {
+        get_diagnostics_data();
+    }
+    
+}
+
 function begin_diagnostics() {
 
     running_diagnostics = true;
@@ -62,7 +76,22 @@ function begin_diagnostics() {
     }).then(res => {
         return res.text();
     }).then(data => {
-            console.log(data);
+            get_diagnostics_data();
+    }).catch(err => {
+        console.log("error", err);
+    });
+}
+
+function get_diagnostics_data() {
+    fetch('http://127.0.0.1:8000/automech/api/get-diagnostics-data', {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(res => {
+        return res.json();
+    }).then(data => {
+        handle_diagnostics_data(data);
     }).catch(err => {
         console.log("error", err);
     });
@@ -81,7 +110,7 @@ function end_diagnostics() {
         }).then(res => {
             return res.text();
         }).then(data => {
-            console.log(data);
+
         }).catch(err => {
             console.log("error", err);
         });
@@ -120,8 +149,8 @@ function stop(){
     document.getElementById("start").disabled = false;
 }
 
-function rpmUpdate(){
-    document.getElementById('rpm').innerHTML = "1800(placeholder)";
+function rpmUpdate(new_rpm){
+    document.getElementById('rpm').innerHTML = new_rpm;
 }
 
 function getMisfireTot() {
