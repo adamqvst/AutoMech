@@ -1,6 +1,5 @@
 html {
     height: 100%;
-    min-width:750px;
 }
 
 :root,
@@ -18,8 +17,7 @@ body {
     color: var(--text-color);
     height: 100%;
     margin: 0;
-    min-width: 750px;
-    
+    min-width: 800px;
 }
 
 .title_text {
@@ -46,7 +44,6 @@ h1 {
     top: 0;
     z-index: 999;
     height:8vw;
-    
 }
 
 .logo img {
@@ -97,16 +94,13 @@ button.prefBtnStyle {
     opacity: 75%;
 }
 
-
 .left-right-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /*min-height: 600px;*/
     margin-left: auto;
     margin-right: auto;
     overflow-y:scroll;
-    
 }
 
 .measurements-title {
@@ -123,8 +117,6 @@ button.prefBtnStyle {
     max-width:50%;
     white-space: nowrap;
 }
-
-
 
 .left-container {
     display: flex;
@@ -151,7 +143,6 @@ button.prefBtnStyle {
     font-size: 1.5em;
     height: 2%;
     margin: 0.2em;
-    
 }
 
 .start-stop-container {
@@ -159,7 +150,6 @@ button.prefBtnStyle {
     flex-direction: row;
     flex: 1 0 60%;
     justify-content: space-around;
-
 }
 
 .start-stop-container button {
@@ -194,7 +184,6 @@ h2 {
     align-content: row;
     width:fit-content;
     padding-right: 10%;
-    
 }
 
 .engcfgform select {
