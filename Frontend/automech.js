@@ -1,5 +1,3 @@
-//temporary filename
-
 cyl1 = 0;
 cyl2 = 30;
 cyl3 = 7;
@@ -15,6 +13,7 @@ var running_diagnostics = false
 var engineCfg
 var firingorder
 var runtimeUpdate
+var mode = "light";
 const csrftoken = getCookie('csrftoken');
 
 function init() {
@@ -40,10 +39,53 @@ function getCookie(name) {
     return cookieValue;
 }
 
-//function below is needed since calling setInterval overwrites any previous interval ID making it inaccessible to the clearInterval function
-function disableStartBtn(){
-    document.getElementById("start").disabled = true;
+function darkMode() {
+    if (mode == "light"){
+    document.documentElement.style.setProperty('--bg-color', '#444444');
+    document.documentElement.style.setProperty('--text-color', 'rgb(255, 255, 255)');
+    document.documentElement.style.setProperty('--nav-color', '#1a1a1a');
+    document.documentElement.style.setProperty('--lcontainer-color', 'rgb(100, 100, 100)');
+    document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
+    mode = "dark";
+    }
+    else {
+    document.documentElement.style.setProperty('--bg-color', 'rgb(255, 255, 255');
+    document.documentElement.style.setProperty('--text-color', 'black');
+    document.documentElement.style.setProperty('--nav-color', '#444444');
+    document.documentElement.style.setProperty('--lcontainer-color', 'white');
+    document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
+    mode = "light"
+    }
 }
+
+function toggleBtn(){
+    
+    btn = document.getElementById("startStopBtn");
+
+    if (btn.innerHTML == "START"){
+        btn.removeEventListener("click", startStopBtn);
+        btn.addEventListener("click", startStopBtn);
+        btn.innerHTML = "STOP";
+        runtimeCount(); 
+        begin_diagnostics();
+        rpmUpdate(750);
+        getMisfireTot();
+        getMisfire('misfires1', cyl1); 
+        getMisfire('misfires2', cyl2); 
+        getMisfire('misfires3', cyl3); 
+        getMisfire('misfires4', cyl4);
+    }
+ 
+    else {
+        btn.removeEventListener("click", startStopBtn);
+        btn.addEventListener("click", startStopBtn);
+        btn.innerHTML = "START";    
+        stop();
+        end_diagnostics();
+    }
+
+}
+
 
 function handle_diagnostics_data(data) {
 
@@ -146,7 +188,6 @@ function stop(){
     document.getElementById('misfires2').innerHTML = 0;
     document.getElementById('misfires3').innerHTML = 0;
     document.getElementById('misfires4').innerHTML = 0;
-    document.getElementById("start").disabled = false;
 }
 
 function rpmUpdate(new_rpm){
@@ -158,5 +199,5 @@ function getMisfireTot() {
 }
 
 function getMisfire(misfire, cyl) {
-    document.getElementById(misfire).innerHTML = cyl + " (placeholder)"
+    document.getElementById(misfire).innerHTML = cyl
 }
