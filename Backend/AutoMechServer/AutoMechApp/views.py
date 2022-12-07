@@ -38,10 +38,14 @@ def begin_diagnostics(request):
 
 def get_diagnostics_data(request):
 
-    data = RpmExtractor.getChunk(rpmExtractor)
-    jsonEncodedNumpyArray = json.dumps(data[1], cls=NumpyArrayEncoder)
+    data_sparseness = int(request.GET.get('data_sparseness')) 
 
-    print(f'Sending diagnostics data {data[0]}rpm, {len(data[1])}, {len(jsonEncodedNumpyArray)}')
+    rpmExtractor.setSparseness(data_sparseness)
+    data = rpmExtractor.getChunk()
+
+    print(f'received sparseness: {data_sparseness}, computed sparseness: {rpmExtractor.data_sparseness}')
+
+    jsonEncodedNumpyArray = json.dumps(data[1], cls=NumpyArrayEncoder)
 
     reponse_data = {
         "rpm": data[0],

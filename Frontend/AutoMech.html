@@ -1,16 +1,15 @@
 {% load static %}
-
+{% csrf_token %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="{% static 'styles.css' %}">
         <script src="{% static 'automech.js' %}"></script>
-        <script src="{% static 'waveform.js' %}"></script>
         <title>AutoMech v0</title>
     </head>
 
-    <body onload="init()">
+    <body onload="init(), initializeGraph()">
 
         <nav class="navbar">
             <div class="logo">
@@ -46,7 +45,8 @@
                     <p id="misfires4">0</p>
 
                     <div class="start-stop-container">
-                        <button id="start" onclick="begin_diagnostics(), disableStartBtn(), runtimeCount(), rpmUpdate(750), getMisfireTot(), getMisfire('misfires1', cyl1), getMisfire('misfires2', cyl2), getMisfire('misfires3', cyl3), getMisfire('misfires4', cyl4)">START</button>
+                        <button id="start"
+                            onclick="begin_diagnostics(), disableStartBtn(), runtimeCount(), rpmUpdate(750), getMisfireTot(), getMisfire('misfires1', cyl1), getMisfire('misfires2', cyl2), getMisfire('misfires3', cyl3), getMisfire('misfires4', cyl4)">START</button>
                         <button id="stop" onclick="stop(), end_diagnostics()">STOP</button>
                     </div>
                 </div>
@@ -76,8 +76,7 @@
                 </div>
 
                 <div class="waveformcontainer">
-                    <canvas id="glCanvas"></canvas>
-                    <script src="waveform.js"></script>
+                    <canvas id="glCanvas" width="1920" height="1080"></canvas>                    
                 </div>
             </div>
         </div>

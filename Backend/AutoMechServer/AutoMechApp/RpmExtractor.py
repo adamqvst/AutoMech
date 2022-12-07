@@ -58,6 +58,7 @@ class RpmExtractor():
         self.event = Event()
         self.q_data = Queue()
         self.t_main = None
+        self.data_sparseness = 2
 
     def main(self):
 
@@ -86,6 +87,10 @@ class RpmExtractor():
             data = stream.read(CHUNK)   # Read a chunk of data from the stream
 
             data_int = np.frombuffer(data, dtype=np.int16)   # Convert data to int16
+
+            for x in range(self.data_sparseness):
+                data_int = np.delete(data_int, np.arange(0, data_int.size, 2))
+            
             volume = audioop.rms(data, 2)  # Store volume of chunk
 
             # Calculate peak frequency
@@ -105,6 +110,11 @@ class RpmExtractor():
         
         self.event.clear()
         print("\nRpxExtractor.py: halting diagnostics\n")
+
+    #data sparseness determines how much many times the data array should be halved in size
+    #used to reduce amount of data sent to frontend
+    def setSparseness(self, data_sparseness):
+        self.data_sparseness = data_sparseness
 
     def getChunk(self):
         print(f'queue length: {self.q_data.qsize()}')
