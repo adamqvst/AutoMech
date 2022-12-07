@@ -55,7 +55,8 @@ function darkMode() {
     document.documentElement.style.setProperty('--nav-color', '#1a1a1a');
     document.documentElement.style.setProperty('--lcontainer-color', 'rgb(100, 100, 100)');
     document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
-    mode = "dark";
+	canvas.style.backgroundColor = "black";
+	mode = "dark";
     }
     else {
     document.documentElement.style.setProperty('--bg-color', 'rgb(255, 255, 255');
@@ -63,6 +64,7 @@ function darkMode() {
     document.documentElement.style.setProperty('--nav-color', '#444444');
     document.documentElement.style.setProperty('--lcontainer-color', 'white');
     document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
+	canvas.style.backgroundColor = "white";
     mode = "light"
     }
 }
@@ -290,7 +292,7 @@ async function initializeGraph() {
 
     waveformcontainer = document.querySelector('.waveformcontainer');
     canvas = document.querySelector('#glCanvas');
-
+	
     //Initialize webGL
     gl = canvas.getContext('webgl2');
     if (!gl)
