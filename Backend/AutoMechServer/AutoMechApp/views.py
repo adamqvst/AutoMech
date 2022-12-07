@@ -32,7 +32,7 @@ def begin_diagnostics(request):
         firingorder = jsonDict['firingorder']
         print(f'engine configuration: {engineCfg}\nfiring order: {firingorder}')
 
-        rpmExtractor.startDiagnostics()
+        rpmExtractor.startDiagnostics(engineCfg)
 
         return HttpResponse(f'beginning diagnostics on {engineCfg}-cylinder engine')
 
