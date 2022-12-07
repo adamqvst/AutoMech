@@ -68,10 +68,9 @@ function darkMode() {
 }
 
 function toggleBtn(){
-    
-    btn = document.getElementById("startStopBtn");
+    let btn = document.getElementById("startStopBtn");
 
-    if (btn.innerHTML == "START"){
+    if (btn.innerHTML == "START") {
         btn.removeEventListener("click", startStopBtn);
         btn.addEventListener("click", startStopBtn);
         btn.innerHTML = "STOP";
