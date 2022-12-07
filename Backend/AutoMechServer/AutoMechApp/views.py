@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
@@ -8,7 +7,7 @@ from AutoMechApp.RpmExtractor import RpmExtractor
 import time
 
 # Create your views here.
-
+NULL=0
 engineCfg = NULL
 firingorder = NULL
 
