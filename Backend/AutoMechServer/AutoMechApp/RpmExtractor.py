@@ -33,12 +33,18 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     right_frq_boundary = int(frq_int[1] * len(yf) / (frq_int[1] - frq_int[0]))
 
     peaks = find_peaks(np.abs(yf[left_frq_boundary : right_frq_boundary]), height = 1, threshold = 1, distance = 10)
+    if len(peaks) == 0:
+        print("WHOOPS")
+        return -1
     heights = peaks[1]['peak_heights']
 
     num_peaks = 1
     
     # find highest peak
     x_ind = np.argpartition(heights, -num_peaks)[-num_peaks:]
+    if len(x_ind) == 0:
+        print("WHOOPS")
+        return -1
     frequency = np.round(peaks[0][x_ind[0]] * (sampling_rate / n), 2)
 
     # Calculate rpm if frequency is below 400 and volume above threshold
