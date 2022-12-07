@@ -10,10 +10,10 @@ CHUNK = 8192  # Record in chunks of 8192 samples
 FORMAT = pyaudio.paInt16  # 16 bits per sample
 CHANNELS = 1 # Record in mono
 RATE = 44100  # Record at 44100 samples per second
-NUMBER_OF_CYLINDERS = 4
 VOLUME_THRESHOLD = 1000
 
-def dominant_frequency(data, sampling_rate, volume):
+
+def dominant_frequency(data, sampling_rate, volume, engineCfg):
 
     # disregard second channel
     samples_1D = np.empty(len(data)) 
@@ -43,7 +43,7 @@ def dominant_frequency(data, sampling_rate, volume):
 
     # Calculate rpm if frequency is below 400 and volume above threshold
     if volume > VOLUME_THRESHOLD and frequency < 400:
-        rpm = frequency * 60 / (NUMBER_OF_CYLINDERS / 2)
+        rpm = frequency * 60 / (engineCfg / 2)
         print("calculated rpm: " + str(np.round(rpm)))
 
         return np.round(rpm)
@@ -51,8 +51,9 @@ def dominant_frequency(data, sampling_rate, volume):
     return -1
 
 
-
 class RpmExtractor():
+
+    NUMBER_OF_CYLINDERS = 0
 
     def __init__(self):
         self.event = Event()
@@ -94,14 +95,18 @@ class RpmExtractor():
             volume = audioop.rms(data, 2)  # Store volume of chunk
 
             # Calculate peak frequency
-            rpm = dominant_frequency(data_int, RATE, volume)
+            rpm = dominant_frequency(data_int, RATE, volume, NUMBER_OF_CYLINDERS)
 
             self.q_data.put((rpm, data_int))
 
-    def startDiagnostics(self):
+    def startDiagnostics(self, engineCfg):
         self.t_main = Thread(target=self.main)
         self.t_main.start()
-        print("\nRpxExtractor.py: beginning diagnostics\n")
+
+        global NUMBER_OF_CYLINDERS
+        NUMBER_OF_CYLINDERS = int(engineCfg)
+
+        print("\nRpxExtractor.py: beginning diagnostics with engineCfg: " + str(engineCfg) + "\n")
 
     def endDiagnostics(self):
         self.event.set()
