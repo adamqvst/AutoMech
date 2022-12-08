@@ -34,17 +34,18 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     right_frq_boundary = int(frq_int[1] * len(yf) / (frq_int[1] - frq_int[0]))
 
     peaks = find_peaks(np.abs(yf[left_frq_boundary : right_frq_boundary]), height = 1, threshold = 1, distance = 10)
-
+    if len(peaks) == 0:
+        print("WHOOPS")
+        return -1
     heights = peaks[1]['peak_heights']
 
     num_peaks = 1
     
     # find highest peak
     x_ind = np.argpartition(heights, -num_peaks)[-num_peaks:]
-    # return if no peaks are found
-    if (len(x_ind) == 0): 
+    if len(x_ind) == 0:
+        print("WHOOPS")
         return -1
-
     frequency = np.round(peaks[0][x_ind[0]] * (sampling_rate / n), 2)
 
     # Calculate rpm if frequency is below 400 and volume above threshold
@@ -82,7 +83,7 @@ class RpmExtractor():
                     rate=RATE,
                     input=True,
                     frames_per_buffer=CHUNK,
-                    input_device_index = 1)  # Input device
+                    input_device_index = INPUT_DEVICE)  # Input device
 
         while True:
 
@@ -103,12 +104,14 @@ class RpmExtractor():
 
             self.q_data.put((rpm, data_int))
 
-    def startDiagnostics(self, engineCfg):
+    def startDiagnostics(self, engineCfg,inputDevice):
         self.q_data = Queue()
         self.t_main = Thread(target=self.main)
         self.t_main.start()
 
         global NUMBER_OF_CYLINDERS
+        global INPUT_DEVICE
+        INPUT_DEVICE = int(inputDevice)
         NUMBER_OF_CYLINDERS = int(engineCfg)
 
         print("\nRpxExtractor.py: beginning diagnostics with engineCfg: " + str(engineCfg) + "\n")

@@ -14,6 +14,7 @@ var miliseconds;
 var running_diagnostics = false;
 var engineCfg;
 var firingorder;
+var inputDevice;
 var runtimeUpdate;
 var mode = "light";
 var csrftoken;
@@ -26,8 +27,28 @@ var wave_data = [];
 function init() {
     engineCfg = document.getElementById('engcfg').children[0].value;
     firingorder = document.getElementById('firingorder').children[0].value;
+	inputDevice = document.getElementById('inputdevice').value;
     csrftoken = getCookie('csrftoken');
     engineParamSelects = document.querySelectorAll('.engine-parameters select');
+	
+	fetch("http://127.0.0.1:8000/automech/api/get_input_devices").then(function(response) {
+	  return response.json();
+	}).then(function(data) {
+	  const obj = JSON.parse(data);
+	  console.log(obj);
+	  var x = document.getElementById("inputdevice");
+		for(var key in obj) {
+			 var option = document.createElement("option");
+			 option.text = obj[key];
+			 option.value = key;
+			 x.add(option);
+		     console.log(key+" "+obj[key]);
+		   
+		}
+
+	}).catch(function(err) {
+	  console.log('Fetch Error :-S', err);
+	});
 }
 
 // Django throws an error if no CSRF token is sent with PUT/POST requests
@@ -55,7 +76,8 @@ function darkMode() {
     document.documentElement.style.setProperty('--nav-color', '#1a1a1a');
     document.documentElement.style.setProperty('--lcontainer-color', 'rgb(100, 100, 100)');
     document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
-    mode = "dark";
+	canvas.style.backgroundColor = "black";
+	mode = "dark";
     }
     else {
     document.documentElement.style.setProperty('--bg-color', 'rgb(255, 255, 255');
@@ -63,6 +85,7 @@ function darkMode() {
     document.documentElement.style.setProperty('--nav-color', '#444444');
     document.documentElement.style.setProperty('--lcontainer-color', 'white');
     document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
+	canvas.style.backgroundColor = "white";
     mode = "light"
     }
 }
@@ -113,7 +136,6 @@ function handle_diagnostics_data(data) {
 }
 
 function begin_diagnostics() {
-
     engineParamSelects.forEach((select) => {
         select.disabled = true;
     });
@@ -128,7 +150,8 @@ function begin_diagnostics() {
         },
         body: JSON.stringify({
             "engineCfg" : engineCfg,
-            "firingorder" : firingorder
+            "firingorder" : firingorder,
+			"inputdevice" : inputDevice
         })
     }).then(res => {
         return res.text();
@@ -185,6 +208,11 @@ function updateEngineCfg(value) {
 function updateFiringOrder(value) {
     console.log(value);
     firingOrder = value;
+}
+
+function updateInputDevice(value) {
+    console.log(value);
+    inputDevice = value;
 }
 
 function runtimeCount(){

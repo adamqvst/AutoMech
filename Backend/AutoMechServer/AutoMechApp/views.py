@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from django.shortcuts import render
 from django.http import HttpResponse
 import json
@@ -6,6 +5,7 @@ from json import JSONEncoder
 import numpy as np
 from AutoMechApp.RpmExtractor import RpmExtractor
 import time
+import pyaudio
 
 # Create your views here.
 
@@ -27,9 +27,10 @@ def begin_diagnostics(request):
         jsonDict = json.loads(request.body)
         engineCfg = jsonDict['engineCfg']
         firingorder = jsonDict['firingorder']
-        print(f'engine configuration: {engineCfg}\nfiring order: {firingorder}')
+        inputDevice = jsonDict['inputdevice']
+        print(f'engine configuration: {engineCfg}\nfiring order: {firingorder}\ninputdevice: {inputDevice}')
 
-        rpmExtractor.startDiagnostics(engineCfg)
+        rpmExtractor.startDiagnostics(engineCfg,inputDevice)
 
         return HttpResponse(f'beginning diagnostics on {engineCfg}-cylinder engine')
 
@@ -48,6 +49,31 @@ def get_diagnostics_data(request):
         "rpm": data[0],
         "wave": jsonEncodedNumpyArray,
     }
+
+    json_response_data = json.dumps(reponse_data)
+
+    return HttpResponse(json_response_data)
+
+def get_input_devices(request):
+
+
+
+    p = pyaudio.PyAudio()  # Create an interface to PortAudio
+
+    # Print audio devices to console
+    info = p.get_host_api_info_by_index(0)
+	
+    reponse_data = "{"
+
+    numdevices = info.get('deviceCount')
+    for i in range(0, numdevices):
+        if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+            print ("Input Device id ", str(i), " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+            reponse_data += '"'+str(i)+'": "'+p.get_device_info_by_host_api_device_index(0, i).get('name')+'",'
+
+    #jsonEncodedNumpyArray = json.dumps(data[1], cls=NumpyArrayEncoder)
+    reponse_data = reponse_data[:len(reponse_data)-1]
+    reponse_data += "}"
 
     json_response_data = json.dumps(reponse_data)
 
