@@ -14,6 +14,7 @@ var miliseconds;
 var running_diagnostics = false;
 var engineCfg;
 var firingorder;
+var inputDevice;
 var runtimeUpdate;
 var mode = "light";
 var csrftoken;
@@ -26,6 +27,7 @@ var wave_data = []
 function init() {
     engineCfg = document.getElementById('engcfg').children[0].value;
     firingorder = document.getElementById('firingorder').children[0].value;
+	inputDevice = document.getElementById('inputdevice').value;
     csrftoken = getCookie('csrftoken');
     engineParamSelects = document.querySelectorAll('.engine-parameters select');
 }
@@ -116,7 +118,7 @@ function handle_diagnostics_data(data) {
 }
 
 function begin_diagnostics() {
-
+	updateInputDevice();
     engineParamSelects.forEach((select) => {
         select.disabled = true;
     });
@@ -131,7 +133,8 @@ function begin_diagnostics() {
         },
         body: JSON.stringify({
             "engineCfg" : engineCfg,
-            "firingorder" : firingorder
+            "firingorder" : firingorder,
+			"inputdevice" : inputDevice
         })
     }).then(res => {
         return res.text();
@@ -188,6 +191,11 @@ function updateEngineCfg(value) {
 function updateFiringOrder(value) {
     console.log(value);
     firingOrder = value;
+}
+
+function updateInputDevice() {
+    console.log(document.getElementById('inputdevice').value);
+    inputDevice = document.getElementById('inputdevice').value;
 }
 
 function runtimeCount(){
