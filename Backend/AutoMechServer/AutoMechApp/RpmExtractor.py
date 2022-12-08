@@ -84,7 +84,7 @@ class RpmExtractor():
                     rate=RATE,
                     input=True,
                     frames_per_buffer=CHUNK,
-                    input_device_index = 1)  # Input device
+                    input_device_index = INPUT_DEVICE)  # Input device
 
         while True:
 
@@ -105,11 +105,13 @@ class RpmExtractor():
 
             self.q_data.put((rpm, data_int))
 
-    def startDiagnostics(self, engineCfg):
+    def startDiagnostics(self, engineCfg,inputDevice):
         self.t_main = Thread(target=self.main)
         self.t_main.start()
 
         global NUMBER_OF_CYLINDERS
+        global INPUT_DEVICE
+        INPUT_DEVICE = int(inputDevice)
         NUMBER_OF_CYLINDERS = int(engineCfg)
 
         print("\nRpxExtractor.py: beginning diagnostics with engineCfg: " + str(engineCfg) + "\n")
