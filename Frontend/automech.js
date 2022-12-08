@@ -43,7 +43,6 @@ function init() {
 			 option.value = key;
 			 x.add(option);
 		     console.log(key+" "+obj[key]);
-		   
 		}
 
 	}).catch(function(err) {
@@ -370,7 +369,7 @@ async function initializeGraph() {
     waveformcontainer.style.backgroundColor = "black";
 
     //Initialize webGL
-    gl = canvas.getContext('webgl2');
+    gl = canvas.getContext('webgl2', { preserveDrawingBuffer: true });
     if (!gl)
         console.log('ERROR: webGL not supported');
 
@@ -421,18 +420,21 @@ function update() {
     gl.vertexAttribPointer(gl.getAttribLocation(graph_program, "a_position"), 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(gl.getAttribLocation(graph_program, "a_position"));
 
-    var num_chunks = 8;
+    var num_chunks = 6;
     var chunk_size = 512;
-    var currentBufferSize = chunk_size * wave_data.length;
+    var currentBufferSize = chunk_size * num_chunks;
+
+    dataPoints = new Float32Array(chunk_size * 2 * num_chunks);   //x- and y-coordinate
 
     if (wave_data.length > 0) {    
+        
         chunk_size = wave_data[0].length;
 
         if (wave_data.length > num_chunks) {
             wave_data.shift();
         }
 
-        dataPoints = new Float32Array(chunk_size * 2 * num_chunks);   //x- and y-coordinate
+        currentBufferSize = chunk_size * wave_data.length;
 
         //for each chunk
         for (let i = 0; i < wave_data.length; i++) {
@@ -450,9 +452,9 @@ function update() {
 
         //copy data to GPU
         gl.bindBuffer(gl.ARRAY_BUFFER, graph_VBO);
-        gl.bufferData(gl.ARRAY_BUFFER, dataPoints, gl.DYNAMIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, dataPoints, gl.STATIC_DRAW);
     }
-
+    
     //set viewport size
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     //clear the canvas
@@ -464,9 +466,7 @@ function update() {
     gl.uniform2i(gl.getUniformLocation(grid_program, "u_windowSize"), waveformcontainer.clientWidth, waveformcontainer.clientHeight);
     gl.drawArrays(gl.LINES, 0, grid_data.length / 2);
     
-
     if (dataPoints != undefined) { //make sure that we've receiveded some data before rendering
-
         //Rendering
         gl.bindVertexArray(graph_VAO);
         gl.useProgram(graph_program);

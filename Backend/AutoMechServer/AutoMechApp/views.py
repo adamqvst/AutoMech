@@ -40,14 +40,14 @@ def get_diagnostics_data(request):
 
     rpmExtractor.setSparseness(data_sparseness)
     data = rpmExtractor.getChunk()
-
+    
     print(f'received sparseness: {data_sparseness}, computed sparseness: {rpmExtractor.data_sparseness}')
 
     jsonEncodedNumpyArray = json.dumps(data[1], cls=NumpyArrayEncoder)
 
     reponse_data = {
         "rpm": data[0],
-        "wave": jsonEncodedNumpyArray,
+        "wave": jsonEncodedNumpyArray
     }
 
     json_response_data = json.dumps(reponse_data)
@@ -55,9 +55,6 @@ def get_diagnostics_data(request):
     return HttpResponse(json_response_data)
 
 def get_input_devices(request):
-
-
-
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
     # Print audio devices to console
