@@ -30,6 +30,25 @@ function init() {
 	inputDevice = document.getElementById('inputdevice').value;
     csrftoken = getCookie('csrftoken');
     engineParamSelects = document.querySelectorAll('.engine-parameters select');
+	
+	fetch("http://127.0.0.1:8000/automech/api/get_input_devices").then(function(response) {
+	  return response.json();
+	}).then(function(data) {
+	  const obj = JSON.parse(data);
+	  console.log(obj);
+	  var x = document.getElementById("inputdevice");
+		for(var key in obj) {
+			 var option = document.createElement("option");
+			 option.text = obj[key];
+			 option.value = key;
+			 x.add(option);
+		     console.log(key+" "+obj[key]);
+		   
+		}
+
+	}).catch(function(err) {
+	  console.log('Fetch Error :-S', err);
+	});
 }
 
 // Django throws an error if no CSRF token is sent with PUT/POST requests
@@ -118,7 +137,6 @@ function handle_diagnostics_data(data) {
 }
 
 function begin_diagnostics() {
-	updateInputDevice();
     engineParamSelects.forEach((select) => {
         select.disabled = true;
     });
@@ -193,9 +211,9 @@ function updateFiringOrder(value) {
     firingOrder = value;
 }
 
-function updateInputDevice() {
-    console.log(document.getElementById('inputdevice').value);
-    inputDevice = document.getElementById('inputdevice').value;
+function updateInputDevice(value) {
+    console.log(value);
+    inputDevice = value;
 }
 
 function runtimeCount(){
