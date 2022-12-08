@@ -306,6 +306,7 @@ var canvas;
 var aspectRatio;
 var dataPoints;
 var gl;
+var graphScale = [1.0, 10.0];
 //Shader programs
 let graph_program = null;
 let grid_program = null;
@@ -445,7 +446,7 @@ function update() {
             for (let j = chunk_size - 1; j >= 0; j--) {
                 var spacing = aspectRatio * 2.0 / (chunk_size * num_chunks - 1.0);
                 dataPoints[2 * i * chunk_size + j * 2] = j * spacing + chunk_spacing - aspectRatio;   //x-coordinate
-                dataPoints[2 * i * chunk_size + j * 2 + 1] = wave_data[i][j] / waveformcontainer.clientHeight;   //y-coordinate
+                dataPoints[2 * i * chunk_size + j * 2 + 1] = wave_data[i][j] / 32767; //y-coordinate, max-size of 16bit int
                 dataPoints[2 * i * chunk_size + j * 2 + 1] *= 0.1;   //Amplitude
             }
         }
@@ -471,6 +472,7 @@ function update() {
         gl.bindVertexArray(graph_VAO);
         gl.useProgram(graph_program);
         gl.uniform2i(gl.getUniformLocation(graph_program, "u_windowSize"), waveformcontainer.clientWidth, waveformcontainer.clientHeight);
+        gl.uniform2f(gl.getUniformLocation(graph_program, "u_graphScale"), graphScale[0], graphScale[1]);
         gl.drawArrays(gl.LINE_STRIP, 0, currentBufferSize);
     }
 
