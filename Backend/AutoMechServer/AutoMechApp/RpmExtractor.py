@@ -5,6 +5,7 @@ from scipy.fft import rfft, fft
 from scipy.signal import find_peaks
 from threading import Thread, Event
 from queue import Queue
+import time
 
 CHUNK = 8192  # Record in chunks of 8192 samples
 FORMAT = pyaudio.paInt16  # 16 bits per sample
@@ -33,12 +34,17 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     right_frq_boundary = int(frq_int[1] * len(yf) / (frq_int[1] - frq_int[0]))
 
     peaks = find_peaks(np.abs(yf[left_frq_boundary : right_frq_boundary]), height = 1, threshold = 1, distance = 10)
+
     heights = peaks[1]['peak_heights']
 
     num_peaks = 1
     
     # find highest peak
     x_ind = np.argpartition(heights, -num_peaks)[-num_peaks:]
+    # return if no peaks are found
+    if (len(x_ind) == 0): 
+        return -1
+
     frequency = np.round(peaks[0][x_ind[0]] * (sampling_rate / n), 2)
 
     # Calculate rpm if frequency is below 400 and volume above threshold
@@ -57,12 +63,10 @@ class RpmExtractor():
 
     def __init__(self):
         self.event = Event()
-        self.q_data = Queue()
         self.t_main = None
         self.data_sparseness = 2
 
     def main(self):
-
         p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
         # Print audio devices to console
@@ -100,6 +104,7 @@ class RpmExtractor():
             self.q_data.put((rpm, data_int))
 
     def startDiagnostics(self, engineCfg):
+        self.q_data = Queue()
         self.t_main = Thread(target=self.main)
         self.t_main.start()
 

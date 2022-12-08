@@ -100,7 +100,7 @@ button.prefBtnStyle {
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    overflow-y:scroll;
+    /*overflow-y:scroll;*/
 }
 
 .measurements-title {

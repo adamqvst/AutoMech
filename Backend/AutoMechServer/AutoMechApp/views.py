@@ -9,9 +9,6 @@ import time
 
 # Create your views here.
 
-engineCfg = NULL
-firingorder = NULL
-
 rpmExtractor = RpmExtractor()
 
 # https://pynative.com/python-serialize-numpy-ndarray-into-json/
@@ -49,7 +46,7 @@ def get_diagnostics_data(request):
 
     reponse_data = {
         "rpm": data[0],
-        "wave": jsonEncodedNumpyArray
+        "wave": jsonEncodedNumpyArray,
     }
 
     json_response_data = json.dumps(reponse_data)

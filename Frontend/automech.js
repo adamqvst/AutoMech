@@ -17,11 +17,11 @@ var firingorder;
 var runtimeUpdate;
 var mode = "light";
 var csrftoken;
-var data_sparseness = 5;
+var data_sparseness = 4;
 let engineParamSelects = null;
 
-var rpm_data = []
-var wave_data = []
+var rpm_data = [];
+var wave_data = [];
 
 function init() {
     engineCfg = document.getElementById('engcfg').children[0].value;
@@ -93,7 +93,6 @@ function toggleBtn(){
     }
 
 }
-
 
 function handle_diagnostics_data(data) {
 
@@ -280,16 +279,67 @@ var canvas;
 var aspectRatio;
 var dataPoints;
 var gl;
-let program = null;
-let VAO = null;
-let VBO = null;
+//Shader programs
+let graph_program = null;
+let grid_program = null;
+let graph_VAO = null;
+let graph_VBO = null;
+let grid_VAO = null;
+let grid_VBO = null;
 
 window.addEventListener('resize', updateViewport, false);
+
+//Functoin for generating graph gird
+function constructGrid() {
+
+    var gridSize = 60; // pixels
+
+    var cols = Math.ceil(canvas.width / gridSize);
+    var rows = Math.ceil(canvas.height / gridSize);
+
+    if (rows % 2 == 0) {
+        rows--;
+    }
+
+    let s = (gridSize / canvas.height) * 2;
+
+    //console.log(cols, rows, s);
+
+    var numPoints = (rows * 2 + cols * 2) * 2;
+
+    let grid_data = new Float32Array(numPoints);
+
+    // columns
+    for (let i = 0; i < cols; i++) {
+        //TOP
+        grid_data[i * 4] = aspectRatio - i * s - s;
+        grid_data[i * 4 + 1] = 1.0;
+
+        //BOTTOM
+        grid_data[i * 4 + 2] = aspectRatio - i * s - s;
+        grid_data[i * 4 + 3] = -1.0;
+    }
+
+    // rows
+    for (let i = 0; i < rows; i++) {
+        //LEFT
+        grid_data[cols * 4 + i * 4] = -aspectRatio;
+        grid_data[cols * 4 + i * 4 + 1] = -i * s + (s * rows) / 2.0 - 0.5 * s;
+
+        //RIGHT
+        grid_data[cols * 4 + i * 4 + 2] = aspectRatio;
+        grid_data[cols * 4 + i * 4 + 3] = -i * s + (s * rows) / 2.0 - 0.5 * s;
+    }
+
+    return grid_data;
+}
 
 async function initializeGraph() {
 
     waveformcontainer = document.querySelector('.waveformcontainer');
     canvas = document.querySelector('#glCanvas');
+
+    waveformcontainer.style.backgroundColor = "black";
 
     //Initialize webGL
     gl = canvas.getContext('webgl2');
@@ -299,62 +349,101 @@ async function initializeGraph() {
     updateViewport();
 
     //Fetch shaders from backend
-    var vertexShaderSource = await fetchShaderSource('graph_VS.vert');
-    var fragmentShaderSource = await fetchShaderSource('graph_FS.frag');
+    var graph_VS_source = await fetchShaderSource('graph_VS.vert');
+    var graph_FS_source = await fetchShaderSource('graph_FS.frag');
+    var grid_VS_source = await fetchShaderSource('grid_VS.vert');
+    var grid_FS_source = await fetchShaderSource('grid_FS.frag');
+
 
     //Create shader program
-    var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-    program = createProgram(gl, vertexShader, fragmentShader);
+    var vertexShader = createShader(gl, gl.VERTEX_SHADER, graph_VS_source);
+    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, graph_FS_source);
+    graph_program = createProgram(gl, vertexShader, fragmentShader);
+
+    vertexShader = createShader(gl, gl.VERTEX_SHADER, grid_VS_source);
+    fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, grid_FS_source);
+    grid_program = createProgram(gl, vertexShader, fragmentShader);
 
     //create VAO
-    VAO = gl.createVertexArray();
+    graph_VAO = gl.createVertexArray();
+    grid_VAO = gl.createVertexArray();
  
     //create VBO
-    VBO = gl.createBuffer();
+    graph_VBO = gl.createBuffer();
+    grid_VBO = gl.createBuffer();
 
     update();
 }
 
 function update() {
-
-    var a_position_location = gl.getAttribLocation(program, "a_position");
-    var windowSize = gl.getUniformLocation(program, "u_windowSize");
-
-    gl.bindVertexArray(VAO);
-    gl.bindBuffer(gl.ARRAY_BUFFER, VBO);
-    gl.vertexAttribPointer(a_position_location, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(a_position_location);
-
-    if (wave_data.length > 0) {
     
-        var wave_chunk = wave_data.shift();
-        dataPoints = new Float32Array(wave_chunk.length * 2);   // x- and y-coordinate
+    //Grid
+    gl.bindVertexArray(grid_VAO);
+    gl.bindBuffer(gl.ARRAY_BUFFER, grid_VBO);
+    gl.vertexAttribPointer(gl.getAttribLocation(grid_program, "a_position"), 2, gl.FLOAT, false, 0, 0);  // TODO: store attrib locatoin out of function scope
+    gl.enableVertexAttribArray(gl.getAttribLocation(grid_program, "a_position"), 2, gl.FLOAT, false, 0, 0);
 
+    let grid_data = constructGrid();
 
-        for (let i = 0; i < dataPoints.length / 2; i++) {
-            var spacing = 2.0 * aspectRatio / ((dataPoints.length / 2) - 1);
-            dataPoints[i * 2] = i * spacing - aspectRatio;   // x-coordinate
-            dataPoints[i * 2 + 1] = wave_chunk[i] / waveformcontainer.clientHeight;   // y-coordinate
-            dataPoints[i * 2 + 1] *= 0.1;   // Amplitude
+    gl.bufferData(gl.ARRAY_BUFFER, grid_data, gl.STATIC_DRAW);
+
+    //Graph
+    gl.bindVertexArray(graph_VAO);
+    gl.bindBuffer(gl.ARRAY_BUFFER, graph_VBO);
+    gl.vertexAttribPointer(gl.getAttribLocation(graph_program, "a_position"), 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(gl.getAttribLocation(graph_program, "a_position"));
+
+    var num_chunks = 8;
+    var chunk_size = 512;
+    var currentBufferSize = chunk_size * wave_data.length;
+
+    if (wave_data.length > 0) {    
+        chunk_size = wave_data[0].length;
+
+        if (wave_data.length > num_chunks) {
+            wave_data.shift();
         }
+
+        dataPoints = new Float32Array(chunk_size * 2 * num_chunks);   //x- and y-coordinate
+
+        //for each chunk
+        for (let i = 0; i < wave_data.length; i++) {
+
+            var chunk_spacing = aspectRatio * (i / num_chunks) * 2;
+            
+            //for each number in chunk
+            for (let j = chunk_size - 1; j >= 0; j--) {
+                var spacing = aspectRatio * 2.0 / (chunk_size * num_chunks - 1.0);
+                dataPoints[2 * i * chunk_size + j * 2] = j * spacing + chunk_spacing - aspectRatio;   //x-coordinate
+                dataPoints[2 * i * chunk_size + j * 2 + 1] = wave_data[i][j] / waveformcontainer.clientHeight;   //y-coordinate
+                dataPoints[2 * i * chunk_size + j * 2 + 1] *= 0.1;   //Amplitude
+            }
+        }
+
+        //copy data to GPU
+        gl.bindBuffer(gl.ARRAY_BUFFER, graph_VBO);
+        gl.bufferData(gl.ARRAY_BUFFER, dataPoints, gl.DYNAMIC_DRAW);
     }
 
+    //set viewport size
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    //clear the canvas
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
 
-    if (dataPoints != undefined) { // make sure that we've receiveded some data before rendering
-        //copy data to GPU
-        gl.bufferData(gl.ARRAY_BUFFER, dataPoints, gl.STATIC_DRAW);     //TODO: update to glBufferSubData
-        //set viewport size
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-        //clear the canvas
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.bindVertexArray(grid_VAO);
+    gl.useProgram(grid_program);
+    gl.uniform2i(gl.getUniformLocation(grid_program, "u_windowSize"), waveformcontainer.clientWidth, waveformcontainer.clientHeight);
+    gl.drawArrays(gl.LINES, 0, grid_data.length / 2);
+    
+
+    if (dataPoints != undefined) { //make sure that we've receiveded some data before rendering
 
         //Rendering
-        gl.bindVertexArray(VAO);
-        gl.useProgram(program);
-        gl.uniform2i(windowSize, waveformcontainer.clientWidth, waveformcontainer.clientHeight);
-        gl.drawArrays(gl.LINE_STRIP, 0, dataPoints.length / 2);
+        gl.bindVertexArray(graph_VAO);
+        gl.useProgram(graph_program);
+        gl.uniform2i(gl.getUniformLocation(graph_program, "u_windowSize"), waveformcontainer.clientWidth, waveformcontainer.clientHeight);
+        gl.drawArrays(gl.LINE_STRIP, 0, currentBufferSize);
     }
 
     requestAnimationFrame(() => {
