@@ -192,13 +192,13 @@ h2 {
     max-height:2.8vw;
 }
 
-.orderform {
+.orderform, .inputform  {
     display: flex;
     align-content: row;
     width:fit-content;  
 }
 
-.orderform form, .engcfgform form {
+.orderform form, .engcfgform form, .inputform form {
     display: flex;
     align-items: center;
     margin:0px;
