@@ -72,7 +72,7 @@ def get_input_devices(request):
     for i in range(0, numdevices):
         if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
             print ("Input Device id ", str(i), " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
-            reponse_data += '"'+str(i)+'": '+p.get_device_info_by_host_api_device_index(0, i).get('name')+','
+            reponse_data += '"'+str(i)+'": "'+p.get_device_info_by_host_api_device_index(0, i).get('name')+'",'
 
     #jsonEncodedNumpyArray = json.dumps(data[1], cls=NumpyArrayEncoder)
     reponse_data = reponse_data[:len(reponse_data)-1]
