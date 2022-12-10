@@ -3,14 +3,14 @@ html {
 }
 
 :root,
-    :root.light {
-    --bg-color:rgb(255, 255, 255);
-    --text-color:black;
-    --nav-color:#444444;
+:root.light {
+    --bg-color: rgb(255, 255, 255);
+    --text-color: black;
+    --nav-color: #444444;
     --lcontainer-color: white;
-    --startstop-color:#5a5a5a;
-    }
-    
+    --startstop-color: #5a5a5a;
+}
+
 
 body {
     background: var(--bg-color);
@@ -35,7 +35,7 @@ h1 {
 
 .navbar {
     background: var(--nav-color);
-    height:max-content;
+    height: max-content;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,7 +43,7 @@ h1 {
     position: sticky;
     top: 0;
     z-index: 999;
-    height:8vw;
+    height: 8vw;
 }
 
 .logo img {
@@ -54,25 +54,25 @@ h1 {
     align-items: center;
     size: auto;
     width: 50%;
-    size:100%;
+    size: 100%;
 }
 
 .logo {
     position: absolute;
     top: 0;
-    left:43%;
+    left: 43%;
     width: 30%;
 }
 
-.version{
+.version {
     position: absolute;
-    bottom:0;
+    bottom: 0;
     left: 55%;
-    color:white;
+    color: white;
 }
 
 .preferences-container {
-    position:absolute;
+    position: absolute;
     display: inline-block;
     cursor: pointer;
     z-index: 1000;
@@ -80,14 +80,14 @@ h1 {
 }
 
 .prefBtn-container {
-    position:absolute;
-    display:flex;
+    position: absolute;
+    display: flex;
     left: 5%;
 }
 
 button.prefBtnStyle {
     font-size: 1em;
-    background-color:#da0101;
+    background-color: #da0101;
     padding: 0.5em 0.5em;
     font-weight: bold;
     color: rgb(199, 198, 198);
@@ -109,12 +109,12 @@ button.prefBtnStyle {
 }
 
 .left-box {
-    width: 30vw;    
+    width: 30vw;
 }
 
 .left-box h3 {
     margin: 0;
-    max-width:50%;
+    max-width: 50%;
     white-space: nowrap;
 }
 
@@ -126,8 +126,8 @@ button.prefBtnStyle {
     padding-left: 5%;
     padding-right: 5%;
     background-color: var(--lcontainer-color);
-    position:relative;
-    float:left;
+    position: relative;
+    float: left;
     justify-content: space-between;
 }
 
@@ -156,7 +156,7 @@ button.prefBtnStyle {
     color: rgb(255, 255, 255);
     background-color: var(--startstop-color);
     border: 2%;
-    border-color:#444444;
+    border-color: #444444;
     padding: 1rem 2rem;
     text-align: center;
     text-decoration: none;
@@ -165,12 +165,12 @@ button.prefBtnStyle {
     border-radius: 5%;
     margin: 1rem;
     width: 8rem;
-    vertical-align:bottom;
+    vertical-align: bottom;
     vertical-align: middle;
 }
 
 h2 {
-    font-size:1.0vw;
+    font-size: 1.0vw;
 
 }
 
@@ -182,42 +182,45 @@ h2 {
 .engcfgform {
     display: flex;
     align-content: row;
-    width:fit-content;
+    width: fit-content;
     padding-right: 10%;
 }
 
 .engcfgform select {
     font-size: 1.2rem;
-    height:fit-content;
-    max-height:2.8vw;
+    height: fit-content;
+    max-height: 2.8vw;
 }
 
-.orderform, .inputform  {
+.orderform,
+.inputform {
     display: flex;
     align-content: row;
-    width:fit-content;  
+    width: fit-content;
 }
 
-.orderform form, .engcfgform form, .inputform form {
+.orderform form,
+.engcfgform form,
+.inputform form {
     display: flex;
     align-items: center;
-    margin:0px;
+    margin: 0px;
 }
 
 .orderform select {
     font-size: 1.3rem;
-    height:fit-content;
-    max-height:2.8vw;
+    height: fit-content;
+    max-height: 2.8vw;
 }
 
 .right-box {
     width: 60%;
-    margin:0px;
+    margin: 0px;
 }
 
-.waveformcontainer{
-    display:flex;
-    border:1px solid black;
+.waveformcontainer {
+    display: flex;
+    border: 1px solid black;
     background-color: rgb(255, 255, 255);
 }
 
