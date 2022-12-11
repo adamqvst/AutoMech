@@ -13,7 +13,14 @@
 
 <br>
 
+## - **BACKEND**
+- *Implement load-balancer so that mulitple clients can connect. This should also fix the double http-get request bug which occurs after beginning and ending diagnostics multiple times*
+
+<br>
+
 ## - **MEASUREMENTS**
+
+
 
 
 
