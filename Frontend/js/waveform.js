@@ -1,6 +1,7 @@
 ////-----------------------------------------------////
 //      W A V E F O R M     V I S U A L I Z E R      //
 ////-----------------------------------------------////
+"use strict";
 
 function updateViewport() {
     var height = waveformcontainer.clientHeight;
