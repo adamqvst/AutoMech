@@ -110,6 +110,8 @@ button.prefBtnStyle {
 .measurements-title {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 .left-box {
@@ -181,38 +183,31 @@ h2 {
 .engine-parameters {
     display: flex;
     align-content: row;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-.engcfgform {
-    display: flex;
-    align-content: row;
-    width: fit-content;
-    padding-right: 10%;
-}
-
-.engcfgform select {
-    font-size: 1.2rem;
-    height: fit-content;
-    max-height: 2.8vw;
-}
-
+.engcfgform,
 .orderform,
 .inputform {
     display: flex;
     align-content: row;
     width: fit-content;
+    margin: auto;
 }
 
 .orderform form,
 .engcfgform form,
 .inputform form {
-    display: flex;
+    display: inline-block;
     align-items: center;
     margin: 0px;
+    margin-left: 10px;
 }
 
-.orderform select {
-    font-size: 1.3rem;
+.engcfgform select,
+.orderform select,
+.inputform select {
     height: fit-content;
     max-height: 2.8vw;
 }
