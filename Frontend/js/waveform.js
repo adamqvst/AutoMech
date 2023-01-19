@@ -15,7 +15,7 @@ function updateViewport() {
 }
 
 async function fetchShaderSource(shader_type) {
-    return fetch('http://127.0.0.1:8000/static/graph/' + shader_type, {
+    return fetch('http://127.0.0.1:8000/static/js/graph/' + shader_type, {
         method: 'GET',
         headers: {
             "Content-Type": "text/plain"
