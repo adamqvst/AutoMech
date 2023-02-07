@@ -40,7 +40,7 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     # find highest peak
     x_ind = np.argpartition(heights, -num_peaks)[-num_peaks:]
     if len(x_ind) == 0:
-        print("WHOOPS")
+        print("WHOOPS2")
         return -1
     frequency = np.round(peaks[0][x_ind[0]], 2)
 
