@@ -22,8 +22,3 @@
 
 
 ## - **ANALYTICS**
-
-- *zero pad data before fft*
-
-
-
