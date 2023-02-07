@@ -2,6 +2,7 @@
 {% csrf_token %}
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
 <head>
     <meta charset="utf-8">
@@ -14,6 +15,21 @@
     <script src="{% static 'js/automech.js' %}"></script>
     <script src="{% static 'js/requests.js' %}"></script>
     <script src="{% static 'js/waveform.js' %}"></script>
+    <style>
+        .resizable {
+            width: 60vw;
+        }
+        .left-container.resizable {
+            width: 30vw;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $(".resizable").resizable();
+        });
+    </script>
     <title>AutoMech v0</title>
 </head>
 
@@ -36,7 +52,7 @@
             <div class="measurements-title">
                 <h2>MEASUREMENTS</h2>
             </div>
-            <div class="left-container">
+            <div class="left-container resizable">
                 <h3>RUNTIME (seconds): </h3>
                 <p id="runtime">0</p>
 
@@ -95,7 +111,7 @@
                 </div>
             </div>
 
-            <div class="waveformcontainer">
+            <div class="waveformcontainer resizable">
                 <canvas id="glCanvas" width="1080" height="420"></canvas>
             </div>
         </div>

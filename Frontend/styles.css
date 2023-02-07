@@ -21,8 +21,8 @@ body {
     color: var(--text-color);
     height: 100%;
     margin: 0;
-    overflow-x:hidden;
-    overflow-y:auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .title_text {
@@ -58,7 +58,7 @@ h1 {
     align-items: center;
     size: auto;
     width: 80%;
-    
+
 }
 
 .logo {
@@ -113,12 +113,14 @@ button.prefBtnStyle {
     margin-top: 6vw;
     margin-bottom: 5px;
 }
+
 @media only screen and (max-width: 786px) {
     .left-box {
         width: 80%;
         margin-left: 10%;
     }
 }
+
 .left-container {
     display: flex;
     flex-wrap: wrap;
@@ -191,7 +193,7 @@ h2 {
     flex-direction: row;
     width: 80vw;
     margin-left: 17%;
-    margin-right:0px;
+    margin-right: 0px;
     margin-bottom: 2vw;
 }
 
@@ -221,21 +223,23 @@ h2 {
     display: flex;
     border: 1px solid black;
     background-color: rgb(255, 255, 255);
-    margin-left:10%;
-    width:fit-content;
-    width:87vw;
+    margin-left: 10%;
+    width: fit-content;
+    width: 87vw;
 }
 
 #glCanvas {
+    height: 100%;
+    width: 100%;
     display: block;
 }
 
 .footer {
-    height:2vw;
+    height: 2vw;
 }
 
-@media only screen and (min-width: 786px) and  (max-width: 971px){
-    
+@media only screen and (min-width: 786px) and (max-width: 971px) {
+
     .navbar {
         background: var(--nav-color);
         height: max-content;
@@ -248,7 +252,7 @@ h2 {
         z-index: 999;
         height: 8vw;
     }
-    
+
     .logo img {
         position: absolute;
         top: 0;
@@ -259,14 +263,14 @@ h2 {
         width: 50%;
         size: 100%;
     }
-    
+
     .logo {
         position: absolute;
         top: 0;
         left: 43%;
         width: 30%;
     }
-    
+
     .version {
         position: absolute;
         bottom: 0;
@@ -274,7 +278,7 @@ h2 {
         color: white;
         font-size: 1vw;
     }
-    
+
     .preferences-container {
         position: absolute;
         display: inline-block;
@@ -282,13 +286,13 @@ h2 {
         z-index: 1000;
         left: 5%;
     }
-    
+
     .prefBtn-container {
         position: absolute;
         display: flex;
         left: 5%;
     }
-    
+
     button.prefBtnStyle {
         font-size: 1vw;
         background-color: #da0101;
@@ -297,7 +301,7 @@ h2 {
         color: rgb(199, 198, 198);
         opacity: 75%;
     }
-    
+
     .left-right-container {
         display: flex;
         flex-direction: row;
@@ -306,20 +310,20 @@ h2 {
         margin-right: none;
         /*overflow-y:scroll;*/
     }
-    
+
     .measurements-title {
         display: flex;
         justify-content: center;
         margin-top: 10px;
         margin-bottom: 5px;
     }
-    
+
     .left-box {
         width: 25vw;
-        margin-left:1vw;
-        margin-top:12.5vw;
+        margin-left: 1vw;
+        margin-top: 12.5vw;
     }
-    
+
     .left-container h3 {
         align-self: center;
         flex: 1 0 60%;
@@ -327,17 +331,17 @@ h2 {
         margin: 0.2em;
         font-size: 1.6vw;
     }
-    
+
     .left-container p {
         align-self: center;
         font-size: 1.6vw;
-        height:0%;
+        height: 0%;
     }
-    
+
     h2 {
         font-size: 1.8vw;
     }
-    
+
     .engine-parameters {
         display: flex;
         flex-direction: row;
@@ -347,13 +351,13 @@ h2 {
         position: relative;
         left: calc(-65vw + 50%);
     }
-    
+
     .engcfgform,
     .orderform,
     .inputform {
         display: flex;
         flex-direction: column;
-        width:11vw;
+        width: 11vw;
     }
 
     .orderform form,
@@ -361,19 +365,19 @@ h2 {
     .inputform form {
         align-items: center;
         margin: 0px;
-        margin-right:1vw;
+        margin-right: 1vw;
     }
 
 
     .engcfgform select,
     .orderform select,
     .inputform select {
-        display:inline-block;
-        flex-direction:row;
+        display: inline-block;
+        flex-direction: row;
         height: fit-content;
         max-height: 2.8vw;
     }
-    
+
     .waveformcontainer {
         display: flex;
         border: 1px solid black;
@@ -391,7 +395,7 @@ h2 {
         height: 100%;
         margin: 0;
     }
-    
+
     .navbar {
         background: var(--nav-color);
         height: max-content;
@@ -404,7 +408,7 @@ h2 {
         z-index: 999;
         height: 8vw;
     }
-    
+
     .logo img {
         position: absolute;
         top: 0;
@@ -415,14 +419,14 @@ h2 {
         width: 50%;
         size: 100%;
     }
-    
+
     .logo {
         position: absolute;
         top: 0;
         left: 43%;
         width: 30%;
     }
-    
+
     .version {
         position: absolute;
         bottom: 0;
@@ -430,7 +434,7 @@ h2 {
         color: white;
         font-size: 1vw;
     }
-    
+
     .preferences-container {
         position: absolute;
         display: inline-block;
@@ -438,13 +442,13 @@ h2 {
         z-index: 1000;
         left: 5%;
     }
-    
+
     .prefBtn-container {
         position: absolute;
         display: flex;
         left: 5%;
     }
-    
+
     button.prefBtnStyle {
         font-size: 1vw;
         background-color: #da0101;
@@ -453,7 +457,7 @@ h2 {
         color: rgb(199, 198, 198);
         opacity: 75%;
     }
-    
+
     .left-right-container {
         display: flex;
         flex-direction: row;
@@ -462,24 +466,24 @@ h2 {
         margin-right: auto;
         /*overflow-y:scroll;*/
     }
-    
+
     .measurements-title {
         display: flex;
         justify-content: center;
         margin-top: 10px;
         margin-bottom: 5px;
     }
-    
+
     .left-box {
         width: 30vw;
     }
-    
+
     .left-box h3 {
         margin: 0;
         max-width: 50%;
         white-space: nowrap;
     }
-    
+
     .left-container {
         display: flex;
         flex-wrap: wrap;
@@ -492,7 +496,7 @@ h2 {
         float: left;
         justify-content: space-between;
     }
-    
+
     .left-container h3 {
         align-self: center;
         flex: 1 0 60%;
@@ -500,19 +504,19 @@ h2 {
         margin-left: 0.2em;
         font-size: 1.4vw;
     }
-    
+
     .left-container p {
         align-self: center;
         font-size: 1.4vw;
         height: 0%;
         margin-right: 0.2em;
     }
-    
+
     h2 {
         font-size: 1.0vw;
-    
+
     }
-    
+
     .engine-parameters {
         display: flex;
         flex-direction: row;
@@ -520,7 +524,7 @@ h2 {
         margin-top: 10px;
         margin-bottom: 5px;
     }
-    
+
     .engcfgform,
     .orderform,
     .inputform {
@@ -529,7 +533,7 @@ h2 {
         width: fit-content;
         margin: auto;
     }
-    
+
     .orderform form,
     .engcfgform form,
     .inputform form {
@@ -538,13 +542,13 @@ h2 {
         margin: 0px;
         margin-left: 10px;
     }
-    
+
     .waveformcontainer {
         display: flex;
         border: 1px solid black;
         background-color: rgb(255, 255, 255);
         width: 63vw;
-        margin-left:1vw;
+        margin-left: 1vw;
     }
-    
+
 }
