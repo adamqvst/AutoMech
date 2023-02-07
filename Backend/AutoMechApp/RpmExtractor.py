@@ -17,16 +17,12 @@ VOLUME_THRESHOLD = 1000
 def dominant_frequency(data, sampling_rate, volume, engineCfg):
 
     # disregard second channel
-    samples_1D = np.empty(len(data)) 
+    # apply zero-padding
+    samples_1D = np.zeros(RATE) 
     for x in range(0, len(data)):
         samples_1D[x] = data[x]
 
-    n = CHUNK
-    k = np.arange(n)
-    T = n / sampling_rate
-    xf = k / T
-    xf = xf[range(int(n / 2))] # Single sided frequency range
-    yf = rfft(samples_1D[0:n-1])
+    yf = rfft(samples_1D[0:RATE-1])
 
     #transform from frequency space to sample space
     frq_int = [0, 1000]
@@ -46,7 +42,7 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     if len(x_ind) == 0:
         print("WHOOPS")
         return -1
-    frequency = np.round(peaks[0][x_ind[0]] * (sampling_rate / n), 2)
+    frequency = np.round(peaks[0][x_ind[0]], 2)
 
     # Calculate rpm if frequency is below 400 and volume above threshold
     if volume > VOLUME_THRESHOLD and frequency < 400:
@@ -94,14 +90,16 @@ class RpmExtractor():
 
             data_int = np.frombuffer(data, dtype=np.int16)   # Convert data to int16
 
-            for x in range(self.data_sparseness):
-                data_int = np.delete(data_int, np.arange(0, data_int.size, 2))
-            
             volume = audioop.rms(data, 2)  # Store volume of chunk
 
             # Calculate peak frequency
             rpm = dominant_frequency(data_int, RATE, volume, NUMBER_OF_CYLINDERS)
 
+            # Data sparseness for graph
+
+            for x in range(self.data_sparseness):
+                data_int = np.delete(data_int, np.arange(0, data_int.size, 2))
+            
             self.q_data.put((rpm, data_int))
 
     def startDiagnostics(self, engineCfg,inputDevice):
