@@ -19,7 +19,7 @@
 <br>
 
 ## - **FRONTEND**
-- *Split css file into different functional groups*
+- *Split css file into multiple files depending on screen size (device)*
 
 ## - **MEASUREMENTS**
 
