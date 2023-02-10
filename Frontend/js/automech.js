@@ -44,6 +44,15 @@ function darkMode() {
     }
 }
 
+function menuButton() {
+    var menu = document.getElementById("menu-items");
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "block";
+    }
+  }
+
 function toggleBtn() {
     let btn = document.getElementById("startStopBtn");
 

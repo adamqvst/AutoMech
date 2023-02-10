@@ -28,9 +28,11 @@ def begin_diagnostics(request):
         engineCfg = jsonDict['engineCfg']
         firingorder = jsonDict['firingorder']
         inputDevice = jsonDict['inputdevice']
-        print(f'engine configuration: {engineCfg}\nfiring order: {firingorder}\ninputdevice: {inputDevice}')
+        samplingRate = jsonDict['samplingRate']
+        chunkSize = jsonDict['chunkSize']
+        print(f'engine configuration: {engineCfg}\nfiring order: {firingorder}\ninputdevice: {inputDevice}\sampling rate: {samplingRate}\nchunk size {chunkSize}')
 
-        rpmExtractor.startDiagnostics(engineCfg,inputDevice)
+        rpmExtractor.startDiagnostics(engineCfg, inputDevice, samplingRate, chunkSize)
 
         return HttpResponse(f'beginning diagnostics on {engineCfg}-cylinder engine')
 

@@ -129,6 +129,28 @@ button.prefBtnStyle {
     opacity: 75%;
 }
 
+.navbar #menu-items {
+    display: none;
+}
+
+button.menu-button-style {
+    background-color: #da0101;
+    padding: 0.5em 0.5em;
+    font-weight: bold;
+    color: rgb(199, 198, 198);
+    opacity: 75%;
+}
+
+.menu {
+    right: 5%;
+    position: absolute;
+}
+
+.menu-item {
+    right: 5%;
+    display: grid;
+}
+
 /***************/
 /* LEFT-RIGHT */
 /*************/

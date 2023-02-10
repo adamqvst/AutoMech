@@ -7,10 +7,9 @@ from threading import Thread, Event
 from queue import Queue
 import time
 
-CHUNK = 8192  # Record in chunks of 8192 samples
+# Constants
 FORMAT = pyaudio.paInt16  # 16 bits per sample
 CHANNELS = 1 # Record in mono
-RATE = 44100  # Record at 44100 samples per second
 VOLUME_THRESHOLD = 1000
 
 
@@ -18,11 +17,11 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
 
     # disregard second channel
     # apply zero-padding
-    samples_1D = np.zeros(RATE) 
+    samples_1D = np.zeros(sampling_rate) 
     for x in range(0, len(data)):
         samples_1D[x] = data[x]
 
-    yf = rfft(samples_1D[0:RATE-1])
+    yf = rfft(samples_1D[0:sampling_rate-1])
 
     #transform from frequency space to sample space
     frq_int = [0, 1000]
@@ -53,10 +52,11 @@ def dominant_frequency(data, sampling_rate, volume, engineCfg):
     
     return -1
 
-
 class RpmExtractor():
 
     NUMBER_OF_CYLINDERS = 0
+    RATE = 0
+    CHUNK = 0
 
     def __init__(self):
         self.event = Event()
@@ -102,15 +102,19 @@ class RpmExtractor():
             
             self.q_data.put((rpm, data_int))
 
-    def startDiagnostics(self, engineCfg,inputDevice):
+    def startDiagnostics(self, engineCfg, inputDevice, fs, chunk):
         self.q_data = Queue()
         self.t_main = Thread(target=self.main)
         self.t_main.start()
 
         global NUMBER_OF_CYLINDERS
         global INPUT_DEVICE
+        global RATE
+        global CHUNK
         INPUT_DEVICE = int(inputDevice)
         NUMBER_OF_CYLINDERS = int(engineCfg)
+        RATE = int(fs)
+        CHUNK = int(chunk)
 
         print("\nRpxExtractor.py: beginning diagnostics with engineCfg: " + str(engineCfg) + "\n")
 

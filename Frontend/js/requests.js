@@ -13,7 +13,7 @@ var start, runtime, seconds, miliseconds;
 var running_diagnostics = false;
 
 // variables from nav bar on HTML
-var engineCfg, firingorder, inputDevice;
+var engineCfg, firingorder, inputDevice, samplingRate, chunkSize;
 
 var runtimeUpdate;
 var csrftoken;
@@ -26,6 +26,8 @@ var wave_data = [];
 function init() {
     engineCfg = document.getElementById('engcfg').children[0].value;
     firingorder = document.getElementById('firingorder').children[0].value;
+    samplingRate = document.getElementById('samplingRate').children[0].value;
+    chunkSize = document.getElementById('chunkSize').children[0].value;
     inputDevice = document.getElementById('inputdevice').value;
     csrftoken = getCookie('csrftoken');
     engineParamSelects = document.querySelectorAll('.engine-parameters select');
@@ -85,7 +87,9 @@ function begin_diagnostics() {
         body: JSON.stringify({
             "engineCfg": engineCfg,
             "firingorder": firingorder,
-            "inputdevice": inputDevice
+            "inputdevice": inputDevice,
+            "samplingRate": samplingRate,
+            "chunkSize": chunkSize
         })
     }).then(res => {
         return res.text();
@@ -140,6 +144,16 @@ function updateFiringOrder(value) {
 function updateInputDevice(value) {
     console.log(value);
     inputDevice = value;
+}
+
+function updateSamplingRate(value) {
+    console.log(value);
+    samplingRate = value;
+}
+
+function updateChunkSize(value) {
+    console.log(value);
+    chunkSize = value;
 }
 
 function rpmUpdate(new_rpm) {
