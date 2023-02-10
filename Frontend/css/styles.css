@@ -1,0 +1,285 @@
+html {
+    height: 100%;
+    font-family: Raleway, ubuntu, sans-serif;
+    overflow: hidden;
+    line-height: 1.6;
+
+}
+
+:root,
+:root.light {
+    --bg-color: rgb(255, 255, 255);
+    --text-color: black;
+    --nav-color: #444444;
+    --lcontainer-color: white;
+    --startstop-color: #5a5a5a;
+}
+
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.title_text {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 400%;
+    text-align: center;
+}
+
+/**********************/
+/* Select CFG NAVBAR */
+/********************/
+
+.custom-select-container {
+    background-color: black;
+    display: flex;
+    width: 100%;
+}
+
+/*the container must be positioned relative:*/
+.custom-select-own {
+    position: relative;
+    z-index: 100;
+    width: 33.3333333333333333333333333333333333333333333%;
+}
+
+.custom-select-own select,
+.custom-select-own select option {
+    z-index: 100;
+    width: 100%;
+    text-align: center;
+    font-size: 1vw;
+    height: 2.5vw;
+}
+
+/***************/
+/* TOP NAVBAR */
+/*************/
+
+.navbar {
+    margin: 0;
+    background: var(--nav-color);
+    height: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    top: 0;
+    z-index: 999;
+    height: 16vw;
+}
+
+.logo img {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: auto;
+    align-items: center;
+    size: auto;
+    width: 80%;
+
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 37%;
+    width: 40%;
+}
+
+.version {
+    position: absolute;
+    bottom: 0;
+    left: 63%;
+    color: white;
+    font-size: 1vw;
+}
+
+.preferences-container { /*DEAD*/
+    position: absolute;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 1000;
+    left: 5%;
+}
+
+.prefBtn-container {
+    position: absolute;
+    display: flex;
+    left: 5%;
+}
+
+button.prefBtnStyle {
+    font-size: 2vw;
+    background-color: #da0101;
+    padding: 0.5em 0.5em;
+    font-weight: bold;
+    color: rgb(199, 198, 198);
+    opacity: 75%;
+}
+
+/***************/
+/* LEFT-RIGHT */
+/*************/
+
+.left-right-container {
+    /*background: rgba(52, 87, 226, 0.85);*/
+    background: rgba(142, 138, 124, 0.7);
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+/* LEFT-BOX */
+
+@media only screen and (max-width: 786px) {
+    .left-box {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+.measurements-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 6vw;
+    margin-bottom: 5px;
+}
+
+.left-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    height: 40vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: var(--lcontainer-color);
+    position: relative;
+    float: left;
+    justify-content: space-between;
+}
+
+.left-container h3 {
+    align-self: center;
+    flex: 1 0 60%;
+    height: 10px;
+    font-size: 3vw;
+}
+
+.left-container p {
+    align-self: center;
+    font-size: 3vw;
+    height: 2%;
+
+}
+
+.start-stop-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 60%;
+    justify-content: space-around;
+}
+
+.start-stop-container button {
+    color: rgb(255, 255, 255);
+    background-color: var(--startstop-color);
+    border: 2%;
+    border-color: #444444;
+    padding: 0.8vw 2vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 5%;
+    margin: 1rem;
+    width: 8rem;
+    vertical-align: bottom;
+    vertical-align: middle;
+}
+
+h2 {
+    font-size: 3.0vw;
+}
+
+/* Right-BOX */
+
+.right-box {
+    width: 60%;
+    margin: 0px;
+}
+
+/*******************/
+/* Waveform Graph */
+/*****************/
+
+.waveformcontainer {
+    display: flex;
+    border: 1px solid black;
+    background-color: rgb(255, 255, 255);
+    margin-left: 10%;
+    width: fit-content;
+    width: 87vw;
+}
+
+#glCanvas {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+/***************/
+/* Dead code? */
+/*************/
+
+.footer { /*DEAD*/
+    height: 2vw;
+}
+
+.engine-parameters { /*DEAD*/
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    background-color: #666369;
+}
+
+.engcfgform,/*DEAD*/
+.orderform,
+.inputform {
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    margin-left: 17%;
+    margin-right: 0px;
+    margin-bottom: 2vw;
+}
+
+.orderform form,/*DEAD*/
+.engcfgform form,
+.inputform form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.engcfgform select, /*DEAD*/
+.orderform select,
+.inputform select {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    max-height: 8vw;
+}

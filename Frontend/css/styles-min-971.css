@@ -1,0 +1,162 @@
+@media only screen and (min-width: 971px) {
+
+    body {
+        background: var(--bg-color);
+        color: var(--text-color);
+        height: 100%;
+        margin: 0;
+    }
+
+    .navbar {
+        background: var(--nav-color);
+        height: max-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        top: 0;
+        z-index: 999;
+        height: 8vw;
+    }
+
+    .logo img {
+        position: absolute;
+        top: 0;
+        left: auto;
+        right: auto;
+        align-items: center;
+        size: auto;
+        width: 50%;
+        size: 100%;
+    }
+
+    .logo {
+        position: absolute;
+        top: 0;
+        left: 43%;
+        width: 30%;
+    }
+
+    .version {
+        position: absolute;
+        bottom: 0;
+        left: 55%;
+        color: white;
+        font-size: 1vw;
+    }
+
+    .preferences-container {
+        position: absolute;
+        display: inline-block;
+        cursor: pointer;
+        z-index: 1000;
+        left: 5%;
+    }
+
+    .prefBtn-container {
+        position: absolute;
+        display: flex;
+        left: 5%;
+    }
+
+    button.prefBtnStyle {
+        font-size: 1vw;
+        background-color: #da0101;
+        padding: 0.5em 0.5em;
+        font-weight: bold;
+        color: rgb(199, 198, 198);
+        opacity: 75%;
+    }
+
+    .left-right-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        /*overflow-y:scroll;*/
+    }
+
+    .measurements-title {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    .left-box {
+        width: 30vw;
+    }
+
+    .left-box h3 {
+        margin: 0;
+        max-width: 50%;
+        white-space: nowrap;
+    }
+
+    .left-container {
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid black;
+        height: 40vh;
+        padding-left: 5%;
+        padding-right: 5%;
+        background-color: var(--lcontainer-color);
+        position: relative;
+        float: left;
+        justify-content: space-between;
+    }
+
+    .left-container h3 {
+        align-self: center;
+        flex: 1 0 60%;
+        height: 3.1%;
+        margin-left: 0.2em;
+        font-size: 1.4vw;
+    }
+
+    .left-container p {
+        align-self: center;
+        font-size: 1.4vw;
+        height: 0%;
+        margin-right: 0.2em;
+    }
+
+    h2 {
+        font-size: 1.0vw;
+
+    }
+
+    .engine-parameters {
+        display: flex;
+        flex-direction: row;
+        align-content: row;
+    }
+
+    .engcfgform,
+    .orderform,
+    .inputform {
+        display: flex;
+        align-content: row;
+        width: fit-content;
+        margin: auto;
+    }
+
+    .orderform form,
+    .engcfgform form,
+    .inputform form {
+        display: inline-block;
+        align-items: center;
+        margin: 0px;
+        margin-left: 10px;
+    }
+
+    .waveformcontainer {
+        display: flex;
+        border: 1px solid black;
+        background-color: rgb(255, 255, 255);
+        width: 63vw;
+        margin-left: 1vw;
+    }
+
+}
