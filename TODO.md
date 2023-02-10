@@ -18,6 +18,9 @@
 
 <br>
 
+## - **FRONTEND**
+- *Split css file into different functional groups*
+
 ## - **MEASUREMENTS**
 
 
