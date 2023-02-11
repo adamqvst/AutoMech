@@ -46,10 +46,13 @@ function darkMode() {
 
 function menuButton() {
     var menu = document.getElementById("menu-items");
+    var button = document.getElementById("menu-button");
     if (menu.style.display === "block") {
       menu.style.display = "none";
+      button.innerText = "Settings";
     } else {
       menu.style.display = "block";
+      button.innerText = "X";
     }
   }
 
