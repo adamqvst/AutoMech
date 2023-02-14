@@ -135,10 +135,18 @@
         max-height: 2.8vw;
     }
 
+    #graph-canvas {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+        display: block;
+    }
+
     .waveformcontainer {
         display: flex;
-        border: 1px solid black;
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255, 0);
         width: 72vw;
         margin-left: 1vw;
     }

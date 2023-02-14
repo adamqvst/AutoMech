@@ -1,5 +1,3 @@
-"use strict";
-
 var cyl1 = 0;
 var cyl2 = 30;
 var cyl3 = 7;
@@ -8,7 +6,57 @@ var cyl4 = 0;
 var cyl = "placeholder"
 
 // time related variables
+var start, runtime, seconds, miliseconds;
+
+var running_diagnostics = false;
+
+// variables from nav bar on HTML
+var engineCfg, firingorder, inputDevice, samplingRate, chunkSize;
+
+var runtimeUpdate;
+var csrftoken;
+var data_sparseness = 2;
+let engineParamSelects = null;
+
+var rpm_data = [];
+var wave_data = [];
+const rpm_data_maxs_n_storedValues = 100;
+const wave_data_max_n_storedChunks = 20;
+
+// time related variables
 var mode = "light";
+
+function init() {
+    engineCfg = document.getElementById('engcfg').children[0].value;
+    firingorder = document.getElementById('firingorder').children[0].value;
+    samplingRate = document.getElementById('samplingRate').children[0].value;
+    chunkSize = document.getElementById('chunkSize').children[0].value;
+    inputDevice = document.getElementById('inputdevice').value;
+    csrftoken = getCookie('csrftoken');
+    engineParamSelects = document.querySelectorAll('.engine-parameters select');
+
+    rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
+
+    // Ensure that graphs are created AFTER initialization is completed
+    initialize_graphs().then(() => {
+        let graph_rpm = createGraph('graph-rpm', rpm_data, continuous_DPF, 15);
+        graph_rpm.setMaxChunks(100);
+        graph_rpm.setGraphColor(0.0, 1.0, 0.25, 1.0);
+
+        let graph_a1 = createGraph('graph-audio-1', wave_data, chunked_DPF, 60);
+        graph_a1.setMaxChunks(5);
+        graph_a1.setGridColor(1.0, 1.0, 1.0, 1.0);
+        graph_a1.setGraphColor(1.0, 1.0, 0.0, 1.0);
+        graph_a1.setPaperColor(0.1, 0.1, 0.2, 1.0);
+        graph_a1.setGraphScale(2.0, 10.0);
+
+        let graph_a2 = createGraph('graph-audio-2', wave_data, chunked_DPF, 15);
+        graph_a2.setGridColor(0.5, 0.5, 0.5, 1.0);
+        graph_a2.setGraphColor(1.0, 1.0, 0.0, 1.0);
+        graph_a2.setPaperColor(0.1, 0.1, 0.2, 1.0);
+        graph_a2.setGraphScale(1.0, 10.0);
+    });
+}
 
 function setup_input_devices(JSONinputDevices) {
     const obj = JSON.parse(JSON.parse(JSONinputDevices));

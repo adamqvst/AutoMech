@@ -1,6 +1,6 @@
 precision mediump float;
-varying vec3 vertPos;
+uniform vec4 u_gridColor;
 
 void main() {
-    gl_FragColor = vec4(0.6, 0.6, 0.6, 1.0);
+    gl_FragColor = u_gridColor;
 }

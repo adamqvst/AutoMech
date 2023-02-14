@@ -22,7 +22,7 @@ body {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
-    overflow-y: auto;
+    /*overflow-y: auto;*/
 }
 
 .title_text {
@@ -161,7 +161,7 @@ button.menu-button-style {
 
 .left-right-container {
     /*background: rgba(52, 87, 226, 0.85);*/
-    background: rgba(142, 138, 124, 0.7);
+    /*background: rgba(142, 138, 124, 0.7);*/
     min-height: 800px;
     display: flex;
     flex-direction: column;
@@ -248,22 +248,74 @@ h2 {
     margin: 0px;
 }
 
-/*******************/
-/* Waveform Graph */
-/*****************/
+/*********/
+/* GRAPH */
+/*********/
 
 .waveformcontainer {
     display: flex;
-    border: 1px solid black;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255, 0);
     margin-left: 10%;
+    flex-wrap: wrap;
     width: fit-content;
     width: 87vw;
+    padding-top: 10px;
 }
 
-#glCanvas {
-    height: 100%;
+#graph-audio-1 {
+    margin-right: 10px;
+    width: calc(50% - 5px)
+}
+
+#graph-audio-2 {
+    width: calc(50% - 5px)
+}
+
+#graph-rpm {
+    margin-top: 10px;
+}
+
+#graph-info {
+    border-bottom: 2px solid silver;
+    background-color: #444444;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#graph-label {
+    font-size: 1.5em;
+    color: rgb(255, 255, 255);
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
+#graph-settings-button {
+    width: 1.4em;
+    height: 1.4em;
+    align-self: center;
+    margin-right: 10px;
+}
+
+#paper {
     width: 100%;
+    flex-grow: 1;
+    background-color: #444444;
+    z-index: -2;
+}
+
+.graph {
+    display: flex;
+    flex-direction: column;
+    border: 4px solid silver;
+}
+
+#graph-canvas {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
     display: block;
 }
 

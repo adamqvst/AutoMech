@@ -8,7 +8,6 @@
 - *Dynamic scaling*
 - *Smooth motion*
 - *Axis labels (time, amplitude)*
-- *Abstract rendering into simple function so that graphs can be created easily*
 - *add Dropdown menu (hamburger) for graph settings*
 
 <br>

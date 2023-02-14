@@ -8,4 +8,5 @@ void main() {
     float aspectRatio = float(u_windowSize.x) / float(u_windowSize.y);
 
     gl_Position = vec4(a_position.x / aspectRatio, a_position.yzw);
+    //gl_Position = vec4(a_position.x, a_position.yzw);
 }

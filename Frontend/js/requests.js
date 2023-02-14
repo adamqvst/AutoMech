@@ -1,40 +1,5 @@
 "use strict";
 
-var cyl1 = 0;
-var cyl2 = 30;
-var cyl3 = 7;
-var cyl4 = 0;
-
-var cyl = "placeholder"
-
-// time related variables
-var start, runtime, seconds, miliseconds;
-
-var running_diagnostics = false;
-
-// variables from nav bar on HTML
-var engineCfg, firingorder, inputDevice, samplingRate, chunkSize;
-
-var runtimeUpdate;
-var csrftoken;
-var data_sparseness = 4;
-let engineParamSelects = null;
-
-var rpm_data = [];
-var wave_data = [];
-
-function init() {
-    engineCfg = document.getElementById('engcfg').children[0].value;
-    firingorder = document.getElementById('firingorder').children[0].value;
-    samplingRate = document.getElementById('samplingRate').children[0].value;
-    chunkSize = document.getElementById('chunkSize').children[0].value;
-    inputDevice = document.getElementById('inputdevice').value;
-    csrftoken = getCookie('csrftoken');
-    engineParamSelects = document.querySelectorAll('.engine-parameters select');
-
-    rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
-}
-
 // Django throws an error if no CSRF token is sent with PUT/POST requests
 // https://docs.djangoproject.com/en/3.2/ref/csrf/#ajax
 function getCookie(name) {
@@ -64,6 +29,14 @@ function handle_diagnostics_data(data) {
         }
         rpm_data.push(jsonOBJ.rpm);
         wave_data.push(JSON.parse(jsonOBJ.wave));
+
+        if (rpm_data.length > rpm_data_maxs_n_storedValues) {
+            rpm_data.shift(); // removes first element from array
+        }
+
+        if (wave_data.length > wave_data_max_n_storedChunks) {
+            wave_data.shift(); // removes first element from array
+        }
     }
 
     if (running_diagnostics) {
