@@ -80,7 +80,8 @@ h1 {
     height: 16vw;
 }
 
-.logo img {
+.logo-centered img,
+.logo-left img {
     position: absolute;
     top: 0;
     left: auto;
@@ -91,17 +92,32 @@ h1 {
 
 }
 
-.logo {
+.logo-centered {
     position: absolute;
     top: 0;
     left: 37%;
     width: 40%;
 }
 
-.version {
+.version-centered {
     position: absolute;
     bottom: 0;
     left: 63%;
+    color: white;
+    font-size: 1vw;
+}
+
+.logo-left {
+    position: absolute;
+    top: 0;
+    left: 8%;
+    width: 30%;
+}
+
+.version-left {
+    position: absolute;
+    bottom: 0;
+    left: 34%;
     color: white;
     font-size: 1vw;
 }
@@ -122,11 +138,13 @@ h1 {
 
 button.prefBtnStyle {
     font-size: 2vw;
-    background-color: #da0101;
-    padding: 0.5em 0.5em;
     font-weight: bold;
+    background-color: #da0101;
     color: rgb(199, 198, 198);
     opacity: 75%;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 
 .navbar #menu-items {
@@ -134,6 +152,8 @@ button.prefBtnStyle {
 }
 
 button.menu-button-style {
+    font-size: 2vw;
+    height: 50%;
     background-color: #da0101;
     padding: 0.5em 0.5em;
     font-weight: bold;
@@ -150,9 +170,9 @@ button.menu-button-style {
 
 .menu-item {
     right: 5%;
-    display: grid;
-    margin: 10px;
-    margin-top: 12px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 3px;
 }
 
 /***************/

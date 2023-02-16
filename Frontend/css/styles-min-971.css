@@ -20,7 +20,8 @@
         height: 8vw;
     }
 
-    .logo img {
+    .logo-centered img, 
+    .logo-left img {
         position: absolute;
         top: 0;
         left: auto;
@@ -31,17 +32,32 @@
         size: 100%;
     }
 
-    .logo {
+    .logo-centered {
         position: absolute;
         top: 0;
         left: 43%;
         width: 30%;
     }
 
-    .version {
+    .version-centered {
         position: absolute;
         bottom: 0;
         left: 55%;
+        color: white;
+        font-size: 1vw;
+    }
+
+    .logo-left {
+        position: absolute;
+        top: 0;
+        left: 13%;
+        width: 30%;
+    }
+
+    .version-left {
+        position: absolute;
+        bottom: 0;
+        left: 25%;
         color: white;
         font-size: 1vw;
     }
@@ -62,11 +78,41 @@
 
     button.prefBtnStyle {
         font-size: 1vw;
+        font-weight: bold;
+        background-color: #da0101;
+        color: rgb(199, 198, 198);
+        opacity: 75%;
+        display: inline-block;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+
+    .navbar #menu-items {
+        display: none;
+    }
+    
+    button.menu-button-style {
+        font-size: 1vw;
+        height: 50%;
         background-color: #da0101;
         padding: 0.5em 0.5em;
         font-weight: bold;
         color: rgb(199, 198, 198);
         opacity: 75%;
+        float: right;
+    }
+    
+    .menu {
+        right: 5%;
+        position: absolute;
+        display: flex;
+    }
+    
+    .menu-item {
+        size: 1vw;
+        display: inline-block;
+        margin-right: 5px;
+        margin-top: 3px;
     }
 
     .left-right-container {

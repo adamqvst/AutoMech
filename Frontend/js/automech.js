@@ -95,12 +95,18 @@ function darkMode() {
 function menuButton() {
     var menu = document.getElementById("menu-items");
     var button = document.getElementById("menu-button");
+    var logo = document.getElementById("logo");
+    var version = document.getElementById("version");
     if (menu.style.display === "block") {
       menu.style.display = "none";
       button.innerText = "Settings";
+      logo.className = "logo-centered";
+      version.className = "version-centered";
     } else {
       menu.style.display = "block";
-      button.innerText = "X";
+      button.innerText = "Close settings";
+      logo.className = "logo-left";
+      version.className = "version-left";
     }
   }
 
