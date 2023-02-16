@@ -13,17 +13,21 @@
 - *Browser scroll support*
 - *Browser zoom suport*
 - *Pause and resume button*
+- *Time interval*
+- **v2** *Ability to upload and analyze existing audio*
 <br>
 
 ## - **BACKEND**
-- *Implement load-balancer so that mulitple clients can connect. This should also fix the double http-get request bug which occurs after beginning and ending diagnostics multiple times*
-
+- *Fix double http-get request bug which occurs after beginning and ending diagnostics multiple times*
 <br>
 
 ## - **FRONTEND**
-- *Split css file into multiple files depending on screen size (device)*
+- *Add ability to save user settings*
+- *Settings button*
+- *Support zooming*
+- **BUG** *head content in body*
+<br>
 
 ## - **MEASUREMENTS**
-
 
 ## - **ANALYTICS**
