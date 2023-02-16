@@ -5,11 +5,14 @@
 <br>
 
 ## - **GRAPH**:
-- *Dynamic scaling*
+- *Translation*
+- *Scaling*
 - *Smooth motion*
 - *Axis labels (time, amplitude)*
 - *add Dropdown menu (hamburger) for graph settings*
-
+- *Browser scroll support*
+- *Browser zoom suport*
+- *Pause and resume button*
 <br>
 
 ## - **BACKEND**
