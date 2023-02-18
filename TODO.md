@@ -25,7 +25,7 @@
 - *Add ability to save user settings*
 - *Settings button*
 - *Support zooming*
-- **BUG** *head content in body*
+- *Indicator for backend connection*
 <br>
 
 ## - **MEASUREMENTS**
