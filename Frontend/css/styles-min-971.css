@@ -7,6 +7,12 @@
         margin: 0;
         overflow: hidden;
     }
+    
+    .custom-select-own select,
+    .custom-select-own select option {
+        font-size: 1vw;
+        height: 2.5vw;
+    }
 
     .navbar {
         background: var(--nav-color);
