@@ -324,6 +324,19 @@ h2 {
     z-index: -2;
 }
 
+#cursor-data {
+    padding-left: 0.5em;
+    padding-top: 2.5em;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+#cursor-data p {
+    margin: 0;
+    color: white;
+}
+
 .graph {
     display: flex;
     flex-direction: column;
