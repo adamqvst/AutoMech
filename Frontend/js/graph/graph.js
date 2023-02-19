@@ -48,6 +48,17 @@ function createGraph(id, data, dataPointFunction, gridSize) {
     graphInfo.id = 'graph-info';
     graphInfo.appendChild(graphLabel);
     graphInfo.appendChild(graphSettingsButton);
+
+    let cursorData = document.createElement('div');
+    cursorData.id = 'cursor-data';
+    let dataX = document.createElement('p');
+    dataX.id = 'x';
+    let dataY = document.createElement('p');
+    dataY.id = 'y';
+    cursorData.appendChild(dataX);
+    cursorData.appendChild(dataY);
+    graphInfo.appendChild(cursorData);
+
     graphElement.appendChild(graphInfo);
 
     let graphPaper = document.createElement('div');
@@ -57,7 +68,7 @@ function createGraph(id, data, dataPointFunction, gridSize) {
     let g = new Graph(id, data, dataPointFunction, gridSize, graphPaper);
     graphs.set(id, g);
 
-    return g;
+    return g;   
 }   
 
 /* Fetches shader source code and creates shader programs, must be run before any graphs can be created*/
@@ -123,8 +134,8 @@ function renderGraphs() {
 // gridSize: the width in pixels of the grid squares
 class Graph {
 
-    _crosshairData = new Float32Array([0.0, 0.5, 0.0, -0.5,   // vertical line
-                                     -0.5, 0.0, 0.5, 0.0]);   // horizontal line
+    _crosshairData = new Float32Array([0.0, 10000, 0.0, -10000,   // vertical line
+                                     -10000, 0.0, 10000, 0.0]);   // horizontal line
     _dataPoints;
     _max_n_storedChunks = 20;
     _crosshairColor = { r: 1.0, g: 0.0, b: 0.0, a: 1.0 };
@@ -132,6 +143,7 @@ class Graph {
     _paperColor = { r: 0.267, g: 0.267, b: 0.267, a: 1.0 };
     _gridColor = { r: 0.0, g: 0.0, b: 0.0, a: 1.0 };
     _graphScale = { h: 1.0, v: 1.0 };
+    _b_cursor_on_graph = false;
 
     constructor(id, dataSource, dataPointFunction, gridSize, graphPaper) {
         this.id = id;   
@@ -147,6 +159,16 @@ class Graph {
         this.graphPaper = graphPaper;
         this.gridData = constructGrid(gridSize, graphPaper.clientWidth, graphPaper.clientHeight);
 
+        this.crosshair_transform = new Matrix4x4(Matrix4x4.identity());
+
+        graphPaper.parentElement.addEventListener('mousemove', (e) => {
+            this.updateCrosshair(e);
+        });
+
+        graphPaper.parentElement.addEventListener('mouseleave', (e) => {
+            this.updateCrosshair(e);    
+        });
+
         gl.bindVertexArray(this.grid_VAO);
         gl.bindBuffer(gl.ARRAY_BUFFER, this.grid_VBO);
         gl.vertexAttribPointer(gl.getAttribLocation(grid_shader_program, "a_position"), 2, gl.FLOAT, false, 0, 0);  // TODO: store attribute location out of function scope
@@ -159,7 +181,7 @@ class Graph {
     }
 
     setCrosshairColor(r, g, b, a) {
-        this._graphColor = { r: r, g: g, b: b, a: a };
+        this._crosshairColor = { r: r, g: g, b: b, a: a };
     }
 
     setGraphColor(r, g, b, a) {
@@ -196,6 +218,29 @@ class Graph {
         gl.bufferData(gl.ARRAY_BUFFER, this.gridData, gl.STATIC_DRAW);    
     }
 
+    updateCrosshair(e) {
+        let rect = this.graphPaper.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top; 
+
+        this._b_cursor_on_graph = false;
+
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {      
+
+            this._b_cursor_on_graph = true;      
+            //pixel to viewspace
+
+            let x_view = (1 - (2 * x / rect.width)) * this.getAspectRatio();
+            let y_view = (1 - (2 * y / rect.height));
+            
+            this.crosshair_transform.setTranslation(-x_view, y_view, 1);
+            
+            this.graphPaper.parentElement.querySelector('#x').innerText = 'x: ' + Math.round(x);
+            this.graphPaper.parentElement.querySelector('#y').innerText = 'y: ' + Math.round(y);
+            //console.log(this.id + ', ' + x + ', ' + y + ', ' + x_view + ', ' + y_view);
+        }
+    }
+
     render() {
 
         let rect = this.graphPaper.getBoundingClientRect();
@@ -220,7 +265,6 @@ class Graph {
         // Render grid
         gl.bindVertexArray(this.grid_VAO);
         gl.useProgram(grid_shader_program);
-        gl.uniform2i(gl.getUniformLocation(grid_shader_program, "u_windowSize"), this.graphPaper.clientWidth, this.graphPaper.clientHeight);
         gl.uniformMatrix4fv(gl.getUniformLocation(grid_shader_program, "u_viewMatrix"), true, view);
         gl.uniform4f(gl.getUniformLocation(grid_shader_program, "u_gridColor"), this._gridColor.r, this._gridColor.g, this._gridColor.b, this._gridColor.a);
         gl.drawArrays(gl.LINES, 0, this.gridData.length / 2);
@@ -254,24 +298,22 @@ class Graph {
             gl.useProgram(graph_shader_program);
             gl.uniformMatrix4fv(gl.getUniformLocation(graph_shader_program, "u_viewMatrix"), true, view);
             gl.uniform4f(gl.getUniformLocation(graph_shader_program, "u_graphColor"), this._graphColor.r, this._graphColor.g, this._graphColor.b, this._graphColor.a);
-            gl.uniform2i(gl.getUniformLocation(graph_shader_program, "u_windowSize"), rect.width, rect.height);
-            gl.uniform2f(gl.getUniformLocation(graph_shader_program, "u_graphScale"), this._graphScale.h, this._graphScale.v);
             const n_vertices = n_chunks * chunkSize;
             gl.drawArrays(gl.LINE_STRIP, 0, n_vertices);
         }
 
         // Render crosshair
-        let transformation = Matrix4x4.createTransformationMatrix(1.0, 1.0, 1.0, 0.0, 0.0, 0.0);
-        gl.bindVertexArray(this.crosshair_VAO);
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.crosshair_VBO);
-        gl.vertexAttribPointer(gl.getAttribLocation(crosshair_shader_program, "a_position"), 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(gl.getAttribLocation(crosshair_shader_program, "a_position"));
-        gl.bufferData(gl.ARRAY_BUFFER, this._crosshairData, gl.STATIC_DRAW);
-        gl.useProgram(crosshair_shader_program);
-        gl.uniformMatrix4fv(gl.getUniformLocation(crosshair_shader_program, "u_viewMatrix"), true, view);
-        gl.uniformMatrix4fv(gl.getUniformLocation(crosshair_shader_program, "u_transformationMatrix"), true, transformation);
-        gl.uniform2i(gl.getUniformLocation(crosshair_shader_program, "u_windowSize"), rect.width, rect.height);
-        gl.uniform4f(gl.getUniformLocation(crosshair_shader_program, "u_crosshairColor"), this._crosshairColor.r, this._crosshairColor.g, this._crosshairColor.b, this._crosshairColor.a);
-        gl.drawArrays(gl.LINES, 0, this._crosshairData.length / 2);
+        if (this._b_cursor_on_graph) {
+            gl.bindVertexArray(this.crosshair_VAO);
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.crosshair_VBO);
+            gl.vertexAttribPointer(gl.getAttribLocation(crosshair_shader_program, "a_position"), 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(gl.getAttribLocation(crosshair_shader_program, "a_position"));
+            gl.bufferData(gl.ARRAY_BUFFER, this._crosshairData, gl.STATIC_DRAW);
+            gl.useProgram(crosshair_shader_program);
+            gl.uniformMatrix4fv(gl.getUniformLocation(crosshair_shader_program, "u_viewMatrix"), true, view);
+            gl.uniformMatrix4fv(gl.getUniformLocation(crosshair_shader_program, "u_transformationMatrix"), true, this.crosshair_transform.data);
+            gl.uniform4f(gl.getUniformLocation(crosshair_shader_program, "u_crosshairColor"), this._crosshairColor.r, this._crosshairColor.g, this._crosshairColor.b, this._crosshairColor.a);
+            gl.drawArrays(gl.LINES, 0, this._crosshairData.length / 2);
+        }
     }   
 }

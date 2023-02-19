@@ -123,8 +123,18 @@ function createProgram(gl, vertexShader, fragmentShader) {
 
 class Matrix4x4 {
 
-    constructor() {
-        this.data = new Float32Array(16);
+    constructor(data) {
+        if (data === undefined) {
+            this.data = new Float32Array([
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0
+            ]);
+        }
+        else {
+            this.data = data;
+        }
     }
 
     translate(dx, dy, dz) {
