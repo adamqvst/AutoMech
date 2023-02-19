@@ -1,5 +1,11 @@
 @media only screen and (min-width: 786px) and (max-width: 971px) {
 
+    .custom-select-own select,
+    .custom-select-own select option {
+       font-size: 1.5vw;
+       height: 3.5vw;
+    }
+
     .navbar {
         background: var(--nav-color);
         height: max-content;
@@ -84,7 +90,7 @@
     }
     
     button.menu-button-style {
-        font-size: 1vw;
+        font-size: 1.5vw;
         height: 50%;
         background-color: #da0101;
         padding: 0.5em 0.5em;
@@ -125,9 +131,8 @@
     }
 
     .left-box {
-        width: 25vw;
-        margin-left: 1vw;
-        margin-top: 12.5vw;
+        margin-left: -8vw;
+        margin-top: 2vw;
     }
 
     .left-container h3 {
