@@ -13,6 +13,9 @@ var running_diagnostics = false;
 // variables from nav bar on HTML
 var engineCfg, firingorder, inputDevice, samplingRate, chunkSize;
 
+var engCfgSelected = false;
+var firingOrderSelected = false;
+
 var runtimeUpdate;
 var csrftoken;
 var data_sparseness = 2;
@@ -157,4 +160,24 @@ function stop() {
     document.getElementById('misfires2').innerHTML = 0;
     document.getElementById('misfires3').innerHTML = 0;
     document.getElementById('misfires4').innerHTML = 0;
+}
+
+function validateEngineConfiguration(value) {
+    if (value != 0) {engCfgSelected = true;}
+    else {engCfgSelected = false;}
+}
+
+function validateFiringOrder(value) {
+    if (value != 0) {firingOrderSelected = true;}
+    else {firingOrderSelected = false;}
+}
+
+function validateStartButton() {
+    if (engCfgSelected && firingOrderSelected) {
+        document.getElementById('startStopBtn').disabled = false;
+        document.getElementById('startStopBtn').title = "Begin diagnostics";
+    } else {
+        document.getElementById('startStopBtn').disabled = true; 
+        document.getElementById('startStopBtn').title = "Select engine configuration and firing order to begin diagnostics.";
+    }
 }
