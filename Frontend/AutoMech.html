@@ -124,8 +124,8 @@
                 <div class="start-stop-container">
                     <button id="startStopBtn" title="Select engine configuration and firing order to begin diagnostics." onclick="toggleBtn()" disabled>START</button>
                     <div class="connection-area">
-                        <img id="connection-icon" src="{% static 'disconnected.png' %}" width="20" height="15">
-                        <small id="connection-status">Not connected</small>
+                        <img id="connection-icon" title="Diagnostics not running" src="{% static 'disconnected.png' %}" width="20" height="15">
+                        <small id="connection-status" title="Diagnostics not running">Not connected</small>
                     </div>
                 </div>
             </div>

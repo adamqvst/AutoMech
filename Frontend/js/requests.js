@@ -97,9 +97,8 @@ function rest_call(address, method, contentType, dataFunction) {
         },
     }).then(res => {
         if (address.includes("get-diagnostics-data") && running_diagnostics == true) {
-            console.log("ADDRESS ", address);
-            if (res.status == 200) {setConnectionStatus("connected");}
-            else {console.log("here");setConnectionStatus("disconnected");}
+            if (res.status == 200) {setConnectionStatus("connected", res.statusText);}
+            else {setConnectionStatus("disconnected", res.statusText);}
         } 
         return res.text();
     }).then(function (data) {
@@ -146,12 +145,19 @@ function getMisfire(misfire, cyl) {
     document.getElementById(misfire).innerHTML = cyl
 }
 
-function setConnectionStatus(value) {
+function setConnectionStatus(value, description) {
+    var text = document.getElementById('connection-status');
+    var icon = document.getElementById('connection-icon');
+
+    text.title = description;
+    icon.title = description;
+
     if (value == "connected") {
-        document.getElementById('connection-status').innerText="Connected";
-        document.getElementById('connection-icon').src="/static/connected.png";
-    } else if (value == "disconnected") {
-        document.getElementById('connection-status').innerText="Not connected";
-        document.getElementById('connection-icon').src="/static/disconnected.png";
+        text.innerText = "Connected";
+        icon.src = "/static/connected.png";
+    } 
+    else if (value == "disconnected") {
+        text.innerText = "Not connected";
+        icon.src = "/static/disconnected.png";
     }
 }
