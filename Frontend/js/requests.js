@@ -1,5 +1,7 @@
 "use strict";
 
+var running_diagnostics = false;
+
 // Django throws an error if no CSRF token is sent with PUT/POST requests
 // https://docs.djangoproject.com/en/3.2/ref/csrf/#ajax
 function getCookie(name) {
@@ -82,10 +84,8 @@ function end_diagnostics() {
     engineParamSelects.forEach((select) => {
         select.disabled = false;
     });
-
-    running_diagnostics = false
-
-    rest_call("http://127.0.0.1:8000/automech/api/end-diagnostics", "PUT", "text/plain", console.log)
+    running_diagnostics = false;
+    rest_call("http://127.0.0.1:8000/automech/api/end-diagnostics", "PUT", "text/plain", console.log);
 }
 
 function rest_call(address, method, contentType, dataFunction) {
@@ -96,6 +96,11 @@ function rest_call(address, method, contentType, dataFunction) {
             "X-CSRFToken": csrftoken
         },
     }).then(res => {
+        if (address.includes("get-diagnostics-data") && running_diagnostics == true) {
+            console.log("ADDRESS ", address);
+            if (res.status == 200) {setConnectionStatus("connected");}
+            else {console.log("here");setConnectionStatus("disconnected");}
+        } 
         return res.text();
     }).then(function (data) {
         dataFunction(data);
@@ -139,4 +144,14 @@ function getMisfireTot() {
 
 function getMisfire(misfire, cyl) {
     document.getElementById(misfire).innerHTML = cyl
+}
+
+function setConnectionStatus(value) {
+    if (value == "connected") {
+        document.getElementById('connection-status').innerText="Connected";
+        document.getElementById('connection-icon').src="/static/connected.png";
+    } else if (value == "disconnected") {
+        document.getElementById('connection-status').innerText="Not connected";
+        document.getElementById('connection-icon').src="/static/disconnected.png";
+    }
 }

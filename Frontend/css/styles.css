@@ -231,11 +231,11 @@ button.menu-button-style {
     align-self: center;
     font-size: 3vw;
     height: 2%;
-
 }
 
 .start-stop-container {
-    display: flex;
+    display: grid;
+    align-items: center;
     flex-direction: row;
     flex: 1 0 60%;
     justify-content: space-around;
@@ -251,12 +251,16 @@ button.menu-button-style {
     text-decoration: none;
     display: inline-block;
     font-size: 1em;
+    margin-top: 1rem;
     border-radius: 5%;
-    margin: 1rem;
     width: 8rem;
     max-width: 22vw;
     vertical-align: bottom;
     vertical-align: middle;
+}
+
+.connection-area {
+    text-align: center;
 }
 
 h2 {

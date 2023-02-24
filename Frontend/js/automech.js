@@ -136,6 +136,7 @@ function toggleBtn() {
         btn.innerHTML = "START";
         stop();
         end_diagnostics();
+        setConnectionStatus("disconnected");
     }
 
 }
