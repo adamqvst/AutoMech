@@ -23,9 +23,7 @@
 
 ## - **FRONTEND**
 - *Add ability to save user settings*
-- *Settings button*
 - *Support zooming*
-- *Indicator for backend connection*
 <br>
 
 ## - **MEASUREMENTS**
