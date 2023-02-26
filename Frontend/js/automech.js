@@ -11,7 +11,7 @@ var start, runtime, seconds, miliseconds;
 var running_diagnostics = false;
 
 // variables from nav bar on HTML
-var engine_cfg, firing_order, inputDevice, chunk_size, sampling_rate;
+var engine_cfg, firing_order, input_device, chunk_size, sampling_rate;
 
 var engCfgSelected = false;
 var firingOrderSelected = false;
