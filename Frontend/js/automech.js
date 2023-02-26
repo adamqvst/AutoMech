@@ -11,15 +11,15 @@ var start, runtime, seconds, miliseconds;
 var running_diagnostics = false;
 
 // variables from nav bar on HTML
-var engineCfg, firingorder, inputDevice, samplingRate, chunkSize;
+var engine_cfg, firing_order, inputDevice, chunk_size, sampling_rate;
 
 var engCfgSelected = false;
 var firingOrderSelected = false;
 
-var runtimeUpdate;
+var runtime_update;
 var csrftoken;
 var data_sparseness = 2;
-let engineParamSelects = null;
+let engine_param_selects = null;
 
 var rpm_data = [];
 var wave_data = [];
@@ -30,13 +30,13 @@ const wave_data_max_n_storedChunks = 20;
 var mode = "light";
 
 function init() {
-    engineCfg = document.getElementById('engcfg').children[0].value;
-    firingorder = document.getElementById('firingorder').children[0].value;
-    samplingRate = document.getElementById('samplingRate').children[0].value;
-    chunkSize = document.getElementById('chunkSize').children[0].value;
-    inputDevice = document.getElementById('inputdevice').value;
+    engine_cfg = document.getElementById('engcfg').children[0].value;
+    firing_order = document.getElementById('firingorder').children[0].value;
+    sampling_rate = document.getElementById('samplingRate').children[0].value;
+    chunk_size = document.getElementById('chunkSize').children[0].value;
+    input_device = document.getElementById('inputdevice').value;
     csrftoken = getCookie('csrftoken');
-    engineParamSelects = document.querySelectorAll('.engine-parameters select');
+    engine_param_selects = document.querySelectorAll('.engine-parameters select');
 
     rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
 
@@ -59,6 +59,30 @@ function init() {
         graph_a2.setPaperColor(0.1, 0.1, 0.2, 1.0);
         graph_a2.setGraphScale(1.0, 10.0);
     });
+
+    if (localStorage.getItem("dark_mode") == "on"){
+        darkMode();
+    }
+    
+    if (localStorage.getItem("sampling_rate") != null) {
+        sampling_rate = localStorage.getItem("sampling_rate")
+        document.getElementById("samplingRate").value = sampling_rate;
+        updateSamplingRate(sampling_rate);
+    } else {
+        sampling_rate = 44100
+        document.getElementById("samplingRate").value = sampling_rate;
+        updateSamplingRate(sampling_rate);
+    }
+
+    if (localStorage.getItem("chunk_size") != null) {
+        chunk_size = localStorage.getItem("chunk_size")
+        document.getElementById("chunkSize").value = chunk_size;
+        updateChunkSize(chunk_size);
+    } else {
+        chunk_size = 4096
+        document.getElementById("chunkSize").value = chunk_size;
+        updateChunkSize(chunk_size);
+    }
 }
 
 function setup_input_devices(JSONinputDevices) {
@@ -83,6 +107,7 @@ function darkMode() {
         document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
         canvas.style.backgroundColor = "black";
         mode = "dark";
+        window.localStorage.setItem("dark_mode", "on");
     }
     else {
         document.documentElement.style.setProperty('--bg-color', 'rgb(255, 255, 255');
@@ -92,6 +117,7 @@ function darkMode() {
         document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
         canvas.style.backgroundColor = "white";
         mode = "light"
+        window.localStorage.setItem("dark_mode", "off");
     }
 }
 
@@ -143,7 +169,7 @@ function toggleBtn() {
 
 function runtimeCount() {
     start = new Date();
-    runtimeUpdate = setInterval(runtime, 1000);
+    runtime_update = setInterval(runtime, 1000);
 }
 
 function runtime() {
@@ -153,7 +179,7 @@ function runtime() {
 }
 
 function stop() {
-    clearInterval(runtimeUpdate);
+    clearInterval(runtime_update);
     document.getElementById('runtime').innerHTML = 0;
     document.getElementById('rpm').innerHTML = 0;
     document.getElementById('totmisfires').innerHTML = 0;

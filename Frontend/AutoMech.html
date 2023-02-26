@@ -58,13 +58,13 @@
             <div class="menu-item" id="menu-items">
                 <text style="color:rgb(199, 198, 198);">Sampling rate:</text>
                 <select class="menu-item" name="samplingRate" id="samplingRate" onchange='updateSamplingRate(this.value)'>
-                    <option selected="selected" value=44100>44100 Hz (default)</option>
+                    <option value=44100>44100 Hz (default)</option>
                     <option value=48000>48000 Hz</option>
                 </select>
                 <text style="color:rgb(199, 198, 198);">Chunk size:</text>
                 <select class="menu-item" name="chunkSize" id="chunkSize" onchange='updateChunkSize(this.value)'>
                     <option value=2048>2048 samples</option>
-                    <option selected="selected" value=4096>4096 samples (default)</option>
+                    <option value=4096>4096 samples (default)</option>
                     <option value=8192>8192 samples</option>
                 </select>
                 <button class="menu-item" id="prefBtn" onclick="darkMode()">Toggle Light/Dark Mode</button>

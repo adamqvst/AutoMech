@@ -47,7 +47,7 @@ function handle_diagnostics_data(data) {
 }
 
 function begin_diagnostics() {
-    engineParamSelects.forEach((select) => {
+    engine_param_selects.forEach((select) => {
         select.disabled = true;
     });
 
@@ -60,11 +60,11 @@ function begin_diagnostics() {
             "X-CSRFToken": csrftoken
         },
         body: JSON.stringify({
-            "engineCfg": engineCfg,
-            "firingorder": firingorder,
-            "inputdevice": inputDevice,
-            "samplingRate": samplingRate,
-            "chunkSize": chunkSize
+            "engineCfg": engine_cfg,
+            "firingorder": firing_order,
+            "inputdevice": input_device,
+            "samplingRate": sampling_rate,
+            "chunkSize": chunk_size
         })
     }).then(res => {
         return res.text();
@@ -81,7 +81,7 @@ function get_diagnostics_data(sparseness) {
 }
 
 function end_diagnostics() {
-    engineParamSelects.forEach((select) => {
+    engine_param_selects.forEach((select) => {
         select.disabled = false;
     });
     running_diagnostics = false;
@@ -110,27 +110,29 @@ function rest_call(address, method, contentType, dataFunction) {
 
 function updateEngineCfg(value) {
     console.log(value);
-    engineCfg = value;
+    engine_cfg = value;
 }
 
 function updateFiringOrder(value) {
     console.log(value);
-    firingorder = value;
+    firing_order = value;
 }
 
 function updateInputDevice(value) {
     console.log(value);
-    inputDevice = value;
+    input_device = value;
 }
 
 function updateSamplingRate(value) {
     console.log(value);
-    samplingRate = value;
+    sampling_rate = value;
+    window.localStorage.setItem("sampling_rate", value);
 }
 
 function updateChunkSize(value) {
     console.log(value);
-    chunkSize = value;
+    chunk_size = value;
+    window.localStorage.setItem("chunk_size", value);
 }
 
 function rpmUpdate(new_rpm) {
