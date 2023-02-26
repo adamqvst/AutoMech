@@ -22,7 +22,6 @@
 <br>
 
 ## - **FRONTEND**
-- *Add ability to save user settings*
 - *Support zooming*
 <br>
 
