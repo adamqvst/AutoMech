@@ -1,10 +1,3 @@
-var cyl1 = 0;
-var cyl2 = 30;
-var cyl3 = 7;
-var cyl4 = 0;
-
-var cyl = "placeholder"
-
 // time related variables
 var start, runtime, seconds, miliseconds;
 
@@ -102,10 +95,10 @@ function darkMode() {
     if (mode == "light") {
         document.documentElement.style.setProperty('--bg-color', '#444444');
         document.documentElement.style.setProperty('--text-color', 'rgb(255, 255, 255)');
-        document.documentElement.style.setProperty('--nav-color', '#1a1a1a');
+        document.documentElement.style.setProperty('--nav-color', '#303030');
         document.documentElement.style.setProperty('--lcontainer-color', 'rgb(100, 100, 100)');
         document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
-        canvas.style.backgroundColor = "black";
+        document.body.style.background = '/static/background-dark.png';
         mode = "dark";
         window.localStorage.setItem("dark_mode", "on");
     }
@@ -115,7 +108,7 @@ function darkMode() {
         document.documentElement.style.setProperty('--nav-color', '#444444');
         document.documentElement.style.setProperty('--lcontainer-color', 'white');
         document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
-        canvas.style.backgroundColor = "white";
+        document.body.style.background = '/static/background-light.png';
         mode = "light"
         window.localStorage.setItem("dark_mode", "off");
     }
@@ -148,12 +141,7 @@ function toggleBtn() {
         btn.innerHTML = "STOP";
         runtimeCount();
         begin_diagnostics();
-        rpmUpdate(750);
-        getMisfireTot();
-        getMisfire('misfires1', cyl1);
-        getMisfire('misfires2', cyl2);
-        getMisfire('misfires3', cyl3);
-        getMisfire('misfires4', cyl4);
+        rpmUpdate(0);
     }
 
     else {
@@ -182,11 +170,6 @@ function stop() {
     clearInterval(runtime_update);
     document.getElementById('runtime').innerHTML = 0;
     document.getElementById('rpm').innerHTML = 0;
-    document.getElementById('totmisfires').innerHTML = 0;
-    document.getElementById('misfires1').innerHTML = 0;
-    document.getElementById('misfires2').innerHTML = 0;
-    document.getElementById('misfires3').innerHTML = 0;
-    document.getElementById('misfires4').innerHTML = 0;
 }
 
 function validateEngineConfiguration(value) {
@@ -200,11 +183,16 @@ function validateFiringOrder(value) {
 }
 
 function validateStartButton() {
+    var button = document.getElementById('startStopBtn');
+    
     if (engCfgSelected && firingOrderSelected) {
-        document.getElementById('startStopBtn').disabled = false;
-        document.getElementById('startStopBtn').title = "Begin diagnostics";
+        button.disabled = false;
+        if (button.innerHTML == "START")
+            button.title = "Begin diagnostics";
+        else
+            button.title = "Stop diagnostics";
     } else {
-        document.getElementById('startStopBtn').disabled = true; 
-        document.getElementById('startStopBtn').title = "Select engine configuration and firing order to begin diagnostics.";
+        button.disabled = true;
+        button.title = "Select engine configuration and firing order to begin diagnostics.";
     }
 }

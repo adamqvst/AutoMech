@@ -139,14 +139,6 @@ function rpmUpdate(new_rpm) {
     document.getElementById('rpm').innerHTML = new_rpm;
 }
 
-function getMisfireTot() {
-    document.getElementById('totmisfires').innerHTML = cyl1 + cyl2 + cyl3 + cyl4;
-}
-
-function getMisfire(misfire, cyl) {
-    document.getElementById(misfire).innerHTML = cyl
-}
-
 function setConnectionStatus(value, description) {
     var text = document.getElementById('connection-status');
     var icon = document.getElementById('connection-icon');

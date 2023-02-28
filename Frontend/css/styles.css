@@ -173,6 +173,7 @@ button.menu-button-style {
     display: inline-block;
     margin-right: 5px;
     margin-top: 3px;
+    font-size: 1vw;
 }
 
 /***************/
@@ -214,6 +215,8 @@ button.menu-button-style {
     height: 40vh;
     padding-left: 5%;
     padding-right: 5%;
+    padding-bottom: 1%;
+    padding-top: 4%;
     background-color: var(--lcontainer-color);
     position: relative;
     float: left;
@@ -230,7 +233,19 @@ button.menu-button-style {
 .left-container p {
     align-self: center;
     font-size: 3vw;
-    height: 2%;
+    height: 10px;
+}
+
+.left-container i {
+    font-size: 10vw;
+}
+
+.rpm-container {
+    display: grid;
+    align-items: center;
+    flex-direction: row;
+    flex: 1 0 60%;
+    justify-content: space-around;
 }
 
 .start-stop-container {

@@ -26,7 +26,7 @@
     </script>
     <style>
         body {
-            background-image: url("{% static 'Background.png' %}");
+            background-image: url("{% static 'background-light.png' %}");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -37,6 +37,7 @@
 
         .left-container.resizable {
             width: 30vw;
+            min-height: 20vw;
         }
     </style>
     <title>AutoMech v1.0</title>
@@ -78,6 +79,7 @@
             <select name="engcfg" id="engcfg" onchange='updateEngineCfg(this.value); validateEngineConfiguration(this.value); validateStartButton()'>
                 <option value=0>ENGINE CONFIGURATION:</option>
                 <option value=4>Straight 4</option>
+                <option value=5>Straight 5</option>
                 <option value=6>Straight 6</option>
             </select>
         </div>
@@ -85,6 +87,7 @@
             <select name="firingorder" id="firingorder" onchange='updateFiringOrder(this.value); validateFiringOrder(this.value); validateStartButton()'>
                 <option value=0>FIRING ORDER:</option>
                 <option value="1-3-4-2">1-3-4-2</option>
+                <option value="1-2-4-5-3">1-2-4-5-3</option>
                 <option value="1-5-3-6-2-4">1-5-3-6-2-4</option>
             </select>
         </div>
@@ -96,33 +99,16 @@
     </div>
     <div class="left-right-container">
         <div class="left-box">
-            <div class="measurements-title">
-                <h2>MEASUREMENTS</h2>
-            </div>
             <div class="left-container resizable">
                 <h3>RUNTIME (seconds): </h3>
                 <p id="runtime">0</p>
 
                 <h3>ENGINE SPEED (rpm): </h3>
-                <p id="rpm">0</p>
-
-                <h3>TOTAL MISFIRES: </h3>
-                <p id="totmisfires">0</p>
-
-                <h3>CYL-1:</h3>
-                <p id="misfires1">0</p>
-
-                <h3>CYL-2:</h3>
-                <p id="misfires2">0</p>
-
-                <h3>CYL-3:</h3>
-                <p id="misfires3">0</p>
-
-                <h3>CYL-4:</h3>
-                <p id="misfires4">0</p>
+                
+                <div class="rpm-container"><i id="rpm">0</i></div>
 
                 <div class="start-stop-container">
-                    <button id="startStopBtn" title="Select engine configuration and firing order to begin diagnostics." onclick="toggleBtn()" disabled>START</button>
+                    <button id="startStopBtn" title="Select engine configuration and firing order to begin diagnostics." onclick="toggleBtn(); validateStartButton()" disabled>START</button>
                     <div class="connection-area">
                         <img id="connection-icon" title="Diagnostics not running" src="{% static 'disconnected.png' %}" width="10" height="10">
                         <small id="connection-status" title="Diagnostics not running">Not connected</small>

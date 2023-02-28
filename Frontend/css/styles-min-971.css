@@ -142,7 +142,6 @@
     }
 
     .left-box h3 {
-        margin: 0;
         max-width: 50%;
         white-space: nowrap;
     }
@@ -154,6 +153,9 @@
         height: 40vh;
         padding-left: 5%;
         padding-right: 5%;
+        padding-bottom: 1%;
+        padding-top: 4%;
+        margin-top: 10px;
         background-color: var(--lcontainer-color);
         position: relative;
         float: left;
@@ -162,7 +164,6 @@
 
     .left-container h3 {
         align-self: center;
-        flex: 1 0 60%;
         height: 3.1%;
         margin-left: 0.2em;
         font-size: 1.4vw;
@@ -171,13 +172,16 @@
     .left-container p {
         align-self: center;
         font-size: 1.4vw;
-        height: 0%;
+        height: 3.1%;
         margin-right: 0.2em;
+    }
+
+    .left-container i {
+        font-size: 4vw;
     }
 
     h2 {
         font-size: 1.0vw;
-
     }
 
     .engine-parameters {

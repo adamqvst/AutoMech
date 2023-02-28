@@ -91,7 +91,6 @@
     
     button.menu-button-style {
         font-size: 1.5vw;
-        height: 50%;
         background-color: #da0101;
         padding: 0.5em 0.5em;
         font-weight: bold;
@@ -132,7 +131,6 @@
 
     .left-box {
         margin-left: -8vw;
-        margin-top: 2vw;
     }
 
     .left-container h3 {
@@ -140,6 +138,7 @@
         flex: 1 0 60%;
         height: 10px;
         margin: 0.2em;
+        margin-bottom: 5%;
         font-size: 1.6vw;
     }
 
@@ -147,6 +146,10 @@
         align-self: center;
         font-size: 1.6vw;
         height: 0%;
+    }
+
+    .left-container i {
+        font-size: 4vw;
     }
 
     h2 {
