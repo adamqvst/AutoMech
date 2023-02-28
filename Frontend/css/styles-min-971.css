@@ -7,7 +7,7 @@
         margin: 0;
         overflow: hidden;
     }
-    
+
     .custom-select-own select,
     .custom-select-own select option {
         font-size: 1vw;
@@ -26,7 +26,7 @@
         height: 8vw;
     }
 
-    .logo-centered img, 
+    .logo-centered img,
     .logo-left img {
         position: absolute;
         top: 0;
@@ -96,7 +96,7 @@
     .navbar #menu-items {
         display: none;
     }
-    
+
     button.menu-button-style {
         font-size: 1vw;
         height: 50%;
@@ -107,13 +107,13 @@
         opacity: 75%;
         float: right;
     }
-    
+
     .menu {
         right: 5%;
         position: absolute;
         display: flex;
     }
-    
+
     .menu-item {
         size: 1vw;
         display: inline-block;
@@ -182,30 +182,6 @@
 
     h2 {
         font-size: 1.0vw;
-    }
-
-    .engine-parameters {
-        display: flex;
-        flex-direction: row;
-        align-content: row;
-    }
-
-    .engcfgform,
-    .orderform,
-    .inputform {
-        display: flex;
-        align-content: row;
-        width: fit-content;
-        margin: auto;
-    }
-
-    .orderform form,
-    .engcfgform form,
-    .inputform form {
-        display: inline-block;
-        align-items: center;
-        margin: 0px;
-        margin-left: 10px;
     }
 
     #graph-canvas {

@@ -156,40 +156,6 @@
         font-size: 1.8vw;
     }
 
-    .engine-parameters {
-        display: flex;
-        flex-direction: row;
-        width: 100vw;
-        position: relative;
-        left: calc(-65vw + 50%);
-    }
-
-    .engcfgform,
-    .orderform,
-    .inputform {
-        display: flex;
-        flex-direction: column;
-        width: 11vw;
-    }
-
-    .orderform form,
-    .engcfgform form,
-    .inputform form {
-        align-items: center;
-        margin: 0px;
-        margin-right: 1vw;
-    }
-
-
-    .engcfgform select,
-    .orderform select,
-    .inputform select {
-        display: inline-block;
-        flex-direction: row;
-        height: fit-content;
-        max-height: 2.8vw;
-    }
-
     #graph-canvas {
         position: absolute;
         top: 0;

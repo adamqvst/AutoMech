@@ -17,27 +17,12 @@
     <script src="{% static 'js/requests.js' %}"></script>
     <script src="{% static 'js/graph/graph_toolkit.js' %}"></script>
     <script src="{% static 'js/graph/graph.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script>
-        $(function () {
-            $(".resizable").resizable();
-        });
-    </script>
     <style>
         body {
             background-image: url("{% static 'background-light.png' %}");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
-        }
-        .resizable {
-            width: 60vw;
-        }
-
-        .left-container.resizable {
-            width: 30vw;
-            min-height: 20vw;
         }
     </style>
     <title>AutoMech v1.0</title>
@@ -99,7 +84,7 @@
     </div>
     <div class="left-right-container">
         <div class="left-box">
-            <div class="left-container resizable">
+            <div class="left-container">
                 <h3>RUNTIME (seconds): </h3>
                 <p id="runtime">0</p>
 
@@ -118,10 +103,10 @@
         </div>
 
         <div class="right-box">
-            <div class="waveformcontainer resizable">
-                <div class="graph" id="graph-audio-1" style="height: 300px;"></div>
-                <div class="graph" id="graph-audio-2" style="height: 300px;"></div>
-                <div class="graph" id="graph-rpm" style="width: 100%; height: 300px;"></div>
+            <div class="waveformcontainer">
+                <div class="graph" id="graph-audio-1" ></div>
+                <div class="graph" id="graph-audio-2" ></div>
+                <div class="graph" id="graph-rpm" ></div>
             </div>
         </div>
     </div>
