@@ -109,28 +109,25 @@ function rest_call(address, method, contentType, dataFunction) {
 }
 
 function updateEngineCfg(value) {
-    console.log(value);
     engine_cfg = value;
+    window.localStorage.setItem("engine_cfg", value);
 }
 
 function updateFiringOrder(value) {
-    console.log(value);
     firing_order = value;
+    window.localStorage.setItem("firing_order", value);
 }
 
 function updateInputDevice(value) {
-    console.log(value);
     input_device = value;
 }
 
 function updateSamplingRate(value) {
-    console.log(value);
     sampling_rate = value;
     window.localStorage.setItem("sampling_rate", value);
 }
 
 function updateChunkSize(value) {
-    console.log(value);
     chunk_size = value;
     window.localStorage.setItem("chunk_size", value);
 }

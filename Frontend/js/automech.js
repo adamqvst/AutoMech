@@ -33,6 +33,9 @@ function init() {
 
     rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
 
+    // Set stored user preferences
+    retrieve_settings();
+
     // Ensure that graphs are created AFTER initialization is completed
     initialize_graphs().then(() => {
         let graph_rpm = createGraph('graph-rpm', rpm_data, continuous_DPF, 15);
@@ -52,7 +55,9 @@ function init() {
         graph_a2.setPaperColor(0.1, 0.1, 0.2, 1.0);
         graph_a2.setGraphScale(1.0, 10.0);
     });
+}
 
+function retrieve_settings() {
     if (localStorage.getItem("dark_mode") == "on"){
         darkMode();
     }
@@ -62,7 +67,7 @@ function init() {
         document.getElementById("samplingRate").value = sampling_rate;
         updateSamplingRate(sampling_rate);
     } else {
-        sampling_rate = 44100
+        sampling_rate = 44100;
         document.getElementById("samplingRate").value = sampling_rate;
         updateSamplingRate(sampling_rate);
     }
@@ -72,9 +77,34 @@ function init() {
         document.getElementById("chunkSize").value = chunk_size;
         updateChunkSize(chunk_size);
     } else {
-        chunk_size = 4096
+        chunk_size = 4096;
         document.getElementById("chunkSize").value = chunk_size;
         updateChunkSize(chunk_size);
+    }
+
+    if (localStorage.getItem("engine_cfg") != null) {
+        engine_cfg = localStorage.getItem("engine_cfg");
+        document.getElementById("engcfg").value = engine_cfg;
+        updateEngineCfg(engine_cfg);
+        validateEngineConfiguration(engine_cfg);
+        validateStartButton();
+    } else {
+        engine_cfg = 0;
+        document.getElementById("engcfg").value = engine_cfg;
+        updateEngineCfg(engine_cfg);
+    }
+
+    if (localStorage.getItem("firing_order") != null) {
+        firing_order = localStorage.getItem("firing_order");
+        document.getElementById("firingorder").value = firing_order;
+        updateFiringOrder(firing_order);
+        validateFiringOrder(firing_order);
+        validateStartButton();
+        
+    } else {
+        firing_order = 0;
+        document.getElementById("firingorder").value = firing_order;
+        updateFiringOrder(firing_order);
     }
 }
 
