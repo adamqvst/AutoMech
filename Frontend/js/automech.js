@@ -31,7 +31,8 @@ function init() {
     csrftoken = getCookie('csrftoken');
     engine_param_selects = document.querySelectorAll('.engine-parameters select');
 
-    rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
+    // Refresh input devices
+    refreshInputDevices();
 
     // Set stored user preferences
     retrieve_settings();
@@ -110,8 +111,14 @@ function retrieve_settings() {
 
 function setup_input_devices(JSONinputDevices) {
     const obj = JSON.parse(JSON.parse(JSONinputDevices));
-    console.log(obj);
     var x = document.getElementById("inputdevice");
+    
+    x.innerHTML = "";
+    default_option = document.createElement("option");
+    default_option.text = "INPUT DEVICE:";
+    default_option.value = null;
+    x.add(default_option);
+    
     for (var key in obj) {
         var option = document.createElement("option");
         option.text = obj[key];
@@ -225,4 +232,8 @@ function validateStartButton() {
         button.disabled = true;
         button.title = "Select engine configuration and firing order to begin diagnostics.";
     }
+}
+
+function refreshInputDevices() {
+    rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
 }
