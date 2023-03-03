@@ -120,6 +120,7 @@ function updateFiringOrder(value) {
 
 function updateInputDevice(value) {
     input_device = value;
+    window.localStorage.setItem("input_device", value);
 }
 
 function updateSamplingRate(value) {

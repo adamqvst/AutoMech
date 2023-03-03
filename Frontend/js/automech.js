@@ -2,6 +2,7 @@
 var start, runtime, seconds, miliseconds;
 
 var running_diagnostics = false;
+var input_device_list = [];
 
 // variables from nav bar on HTML
 var engine_cfg, firing_order, input_device, chunk_size, sampling_rate;
@@ -112,11 +113,13 @@ function retrieve_settings() {
 function setup_input_devices(JSONinputDevices) {
     const obj = JSON.parse(JSON.parse(JSONinputDevices));
     var x = document.getElementById("inputdevice");
+
+    setListInputDevices(obj);
     
     x.innerHTML = "";
     default_option = document.createElement("option");
     default_option.text = "INPUT DEVICE:";
-    default_option.value = null;
+    default_option.value = -1;
     x.add(default_option);
     
     for (var key in obj) {
@@ -125,6 +128,22 @@ function setup_input_devices(JSONinputDevices) {
         option.value = key;
         x.add(option);
         console.log(key + " " + obj[key]);
+    }
+
+    if (localStorage.getItem("input_device") != null) {
+        if (localStorage.getItem("input_device") <= Object.keys(getListInputDevices()).length - 1) {
+            input_device = localStorage.getItem("input_device");
+            document.getElementById("inputdevice").value = input_device;
+            updateInputDevice(input_device);
+        } else {
+            input_device = -1;
+            document.getElementById("inputdevice").value = input_device;
+            updateInputDevice(input_device);
+        }
+    } else {
+        input_device = -1;
+        document.getElementById("inputdevice").value = input_device;
+        updateInputDevice(input_device);
     }
 }
 
@@ -236,4 +255,12 @@ function validateStartButton() {
 
 function refreshInputDevices() {
     rest_call("http://127.0.0.1:8000/automech/api/get_input_devices", "GET", "text/plain", setup_input_devices);
+}
+
+function setListInputDevices(list) {
+    input_device_list = list;
+}
+
+function getListInputDevices() {
+    return input_device_list;
 }
