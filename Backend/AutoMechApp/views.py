@@ -10,7 +10,6 @@ import pyaudio
 # Create your views here.
 
 rpmExtractor = RpmExtractor()
-py_audio = None
 
 # https://pynative.com/python-serialize-numpy-ndarray-into-json/
 class NumpyArrayEncoder(JSONEncoder):
@@ -59,15 +58,7 @@ def get_diagnostics_data(request):
 
 def get_input_devices(request):
 
-    global py_audio
-
-    if py_audio is None:
-        py_audio = pyaudio.PyAudio()
-
-    # Refresh
-    else:
-        py_audio.terminate()
-        py_audio = pyaudio.PyAudio()
+    py_audio = pyaudio.PyAudio()
 
     # Print audio devices to console
     info = py_audio.get_host_api_info_by_index(0)
@@ -85,6 +76,8 @@ def get_input_devices(request):
     reponse_data += "}"
 
     json_response_data = json.dumps(reponse_data)
+
+    py_audio.terminate()
 
     return HttpResponse(json_response_data)
 

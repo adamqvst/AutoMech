@@ -101,6 +101,9 @@ class RpmExtractor():
                 data_int = np.delete(data_int, np.arange(0, data_int.size, 2))
             
             self.q_data.put((rpm, data_int))
+        
+        stream.close()
+        p.terminate()
 
     def startDiagnostics(self, engineCfg, inputDevice, fs, chunk):
         self.q_data = Queue()
