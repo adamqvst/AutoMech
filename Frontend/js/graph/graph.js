@@ -254,9 +254,10 @@ class Graph {
             let x_normalized = x / rect.width;
             let [index, dataPoint] = viewSpaceToDataPoint(x_normalized, this._dataPoints);
 
-            this.graphPaper.parentElement.querySelector('#x').innerText = this._labelX + index;
-            this.graphPaper.parentElement.querySelector('#y').innerText = this._labelY + dataPoint.toFixed(2);
-            //console.log(this.id + ', ' + x + ', ' + y + ', ' + x_view + ', ' + y_view);
+            if (dataPoint != undefined) {
+                this.graphPaper.parentElement.querySelector('#y').innerText = this._labelY + dataPoint.toFixed(2);
+                this.graphPaper.parentElement.querySelector('#x').innerText = this._labelX + index;
+            }
         }
         else {
             this.graphPaper.parentElement.querySelector('#x').innerText = '';

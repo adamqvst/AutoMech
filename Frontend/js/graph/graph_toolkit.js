@@ -8,8 +8,12 @@
 function viewSpaceToDataPoint(x_view, data) {
 
     let dataPoint = undefined;
-    let index = Math.max(0, Math.floor((data.length / 2) * x_view) * 2 - 1);
-    dataPoint = data[index];
+    let index = undefined;
+
+    if (data != undefined) {
+        index = Math.max(0, Math.floor((data.length / 2) * x_view) * 2 - 1);
+        dataPoint = data[index];
+    }
 
     return [index, dataPoint];
 }
