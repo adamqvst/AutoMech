@@ -64,10 +64,7 @@ h1 {
     background-color:white;
 }
 
-select:hover {
-    background-color:darkgray;
-}
-
+select:hover,
 select:disabled {
     background-color:lightgray;
 }
