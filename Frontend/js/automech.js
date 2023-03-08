@@ -43,7 +43,7 @@ function init() {
         let graph_rpm = createGraph('graph-rpm', rpm_data, continuous_DPF, 15);
         graph_rpm.setMaxChunks(500);
         graph_rpm.setGraphColor(0.0, 1.0, 0.25, 1.0);
-        graph_rpm.setGraphScale(1.0, 0.0003)
+        graph_rpm.setGraphScale(1.0, 0.00015)
         graph_rpm.setGraphTranslation(0, -0.9, 0);
         graph_rpm.setLabelX('i: ');
         graph_rpm.setLabelY('RPM: ');
@@ -63,7 +63,7 @@ function init() {
         graph_a2.setGridColor(0.5, 0.5, 0.5, 1.0);
         graph_a2.setGraphColor(1.0, 1.0, 0.0, 1.0);
         graph_a2.setPaperColor(0.1, 0.1, 0.2, 1.0);
-        graph_a2.setGraphScale(1.0, 0.0001);
+        graph_a2.setGraphScale(1.0, 0.00001);
         graph_a2.setLabelX('i: ');
         graph_a2.setLabelY('AMP: ');
         graph_a2.setCrosshairColor(1.0, 0.2, 0.2);
