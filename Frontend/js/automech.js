@@ -198,6 +198,7 @@ function toggleBtn() {
         runtimeCount();
         begin_diagnostics();
         rpmUpdate(0);
+        toggleSelectButtons();
     }
 
     else {
@@ -207,6 +208,7 @@ function toggleBtn() {
         stop();
         end_diagnostics();
         setConnectionStatus("disconnected", "Diagnostics not running");
+        toggleSelectButtons();
     }
 
 }
@@ -250,6 +252,22 @@ function validateStartButton() {
     } else {
         button.disabled = true;
         button.title = "Select engine configuration and firing order to begin diagnostics.";
+    }
+}
+
+function toggleSelectButtons() {
+    var engcfg_btn = document.getElementById('engcfg');
+    var firingorder_btn = document.getElementById('firingorder');
+    var inputdevice_btn = document.getElementById('inputdevice');
+
+    if (running_diagnostics) {
+        engcfg_btn.disabled = true;
+        firingorder_btn.disabled = true;
+        inputdevice_btn.disabled = true;
+    } else {
+        engcfg_btn.disabled = false;
+        firingorder_btn.disabled = false;
+        inputdevice_btn.disabled = false;
     }
 }
 
