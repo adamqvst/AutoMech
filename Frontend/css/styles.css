@@ -61,6 +61,14 @@ h1 {
     text-align: center;
     font-size: 2vw;
     height: 5vw;
+    background-color:white;
+}
+
+select:hover {
+    background-color:darkgray;
+}
+
+select:disabled {
     background-color:lightgray;
 }
 
