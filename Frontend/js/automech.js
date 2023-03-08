@@ -154,7 +154,7 @@ function darkMode() {
         document.documentElement.style.setProperty('--nav-color', '#303030');
         document.documentElement.style.setProperty('--lcontainer-color', 'rgb(100, 100, 100)');
         document.documentElement.style.setProperty('--startstop-color', '#1f1f1f');
-        document.body.style.background = '/static/background-dark.png';
+        document.body.style = "background: linear-gradient(0deg, rgba(73,76,92,1), 10%, rgba(48,48,48,1) 100%);";
         mode = "dark";
         window.localStorage.setItem("dark_mode", "on");
     }
@@ -164,7 +164,7 @@ function darkMode() {
         document.documentElement.style.setProperty('--nav-color', '#444444');
         document.documentElement.style.setProperty('--lcontainer-color', 'white');
         document.documentElement.style.setProperty('--startstop-color', '#5a5a5a');
-        document.body.style.background = '/static/background-light.png';
+        document.body.style = "background: linear-gradient(0deg, rgba(119,119,119,1) 0%, rgba(163,163,163,1) 14%, rgba(255,255,255,1) 48%);"
         mode = "light"
         window.localStorage.setItem("dark_mode", "off");
     }
