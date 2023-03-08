@@ -61,6 +61,7 @@ h1 {
     text-align: center;
     font-size: 2vw;
     height: 5vw;
+    background-color:lightgray;
 }
 
 /***************/
@@ -184,7 +185,7 @@ button.menu-button-style {
 .left-right-container {
     /*background: rgba(52, 87, 226, 0.85);*/
     /*background: rgba(142, 138, 124, 0.7);*/
-    min-height: 800px;
+    /*min-height: 800px;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -304,19 +305,20 @@ h2 {
 
 #graph-audio-1 {
     margin-right: 10px;
-    width: calc(50% - 5px);
+    width: calc(47% - 5px);
     height: 300px;
 }
 
 #graph-audio-2 {
-    width: calc(50% - 5px);
+    width: calc(47% - 5px);
     height: 300px;
 }
 
 #graph-rpm {
     margin-top: 10px;
     height: 300px;
-    width: 100%;
+    width: 94%;
+    margin-right: 5%;
 }
 
 #graph-info {
