@@ -259,15 +259,19 @@ function toggleSelectButtons() {
     var engcfg_btn = document.getElementById('engcfg');
     var firingorder_btn = document.getElementById('firingorder');
     var inputdevice_btn = document.getElementById('inputdevice');
+    var samplingrate_btn = document.getElementById('samplingRate');
+    var chunksize_btn = document.getElementById('chunkSize');
+
+    var button_list = [engcfg_btn, firingorder_btn, inputdevice_btn, samplingrate_btn, chunksize_btn]
 
     if (running_diagnostics) {
-        engcfg_btn.disabled = true;
-        firingorder_btn.disabled = true;
-        inputdevice_btn.disabled = true;
+        button_list.forEach((btn) => {
+            btn.disabled = true;
+        });
     } else {
-        engcfg_btn.disabled = false;
-        firingorder_btn.disabled = false;
-        inputdevice_btn.disabled = false;
+        button_list.forEach((btn) => {
+            btn.disabled = false;
+        });
     }
 }
 
