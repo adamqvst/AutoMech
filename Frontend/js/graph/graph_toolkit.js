@@ -4,6 +4,16 @@
 
 "use strict";
 
+/* Returns datapoint at cursor position in graph coordinate */
+function viewSpaceToDataPoint(x_view, data) {
+
+    let dataPoint = undefined;
+    let index = Math.max(0, Math.floor((data.length / 2) * x_view) * 2 - 1);
+    dataPoint = data[index];
+
+    return [index, dataPoint];
+}
+
 /* Generates data for rendering a grid pattern */
 function constructGrid(gridSize, width, height) {
     let cols = Math.ceil(width / gridSize);
@@ -53,7 +63,7 @@ function continuous_DPF(data, n_chunks, chunk_size, aspectRatio) {
         for (let i = 0; i < n_chunks; i++) {
             let spacing = aspectRatio * 2.0 / (n_chunks - 1.0);
             dataPoints[2 * i] = i * spacing - aspectRatio; // X
-            dataPoints[2 * i + 1] = data[i] / 10000; // Y,  (divided by max rpm)
+            dataPoints[2 * i + 1] = data[i];
         }
     }
 
@@ -75,8 +85,7 @@ function chunked_DPF(data, n_chunks, chunk_size, aspectRatio) {
             for (let j = chunk_size - 1; j >= 0; j--) {
                 let spacing = aspectRatio * 2.0 / (chunk_size * n_chunks - 1.0);
                 dataPoints[2 * i * chunk_size + j * 2] = j * spacing + chunk_spacing - aspectRatio;   //x-coordinate
-                dataPoints[2 * i * chunk_size + j * 2 + 1] = data[data.length - n_chunks + i][j] / 32767; //y-coordinate, max-size of 16bit int
-                dataPoints[2 * i * chunk_size + j * 2 + 1] *= 0.1;   //Amplitude
+                dataPoints[2 * i * chunk_size + j * 2 + 1] = data[data.length - n_chunks + i][j];
             }
         }
     }

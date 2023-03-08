@@ -143,7 +143,10 @@ class Graph {
     _paperColor = { r: 0.267, g: 0.267, b: 0.267, a: 1.0 };
     _gridColor = { r: 0.0, g: 0.0, b: 0.0, a: 1.0 };
     _graphScale = { h: 1.0, v: 1.0 };
+    _graphTranslation = { x: 0.0, y: 0.0, z: 0.0 };
     _b_cursor_on_graph = false;
+    _labelX = 'x: ';
+    _labelY = 'y: ';
 
     constructor(id, dataSource, dataPointFunction, gridSize, graphPaper) {
         this.id = id;   
@@ -159,6 +162,7 @@ class Graph {
         this.graphPaper = graphPaper;
         this.gridData = constructGrid(gridSize, graphPaper.clientWidth, graphPaper.clientHeight);
 
+        this.graph_transform = new Matrix4x4(Matrix4x4.identity());
         this.crosshair_transform = new Matrix4x4(Matrix4x4.identity());
 
         graphPaper.parentElement.addEventListener('mousemove', (e) => {
@@ -200,6 +204,10 @@ class Graph {
         this._graphScale = { h: h, v: v };
     }
 
+    setGraphTranslation(x, y, z) {
+        this._graphTranslation = { x: x, y: y, z: z };
+    }
+
     setDataSource(dataSource) {
         this.dataSource = dataSource;
     }
@@ -207,6 +215,14 @@ class Graph {
     getAspectRatio() {
         let rect = this.graphPaper.getBoundingClientRect();
         return rect.width / rect.height;
+    }
+
+    setLabelX(label) {
+        this._labelX = label;
+    }
+
+    setLabelY(label) {
+        this._labelY = label;
     }
 
     updateViewport() {
@@ -234,10 +250,17 @@ class Graph {
             let y_view = (1 - (2 * y / rect.height));
             
             this.crosshair_transform.setTranslation(-x_view, y_view, 1);
-            
-            this.graphPaper.parentElement.querySelector('#x').innerText = 'x: ' + Math.round(x);
-            this.graphPaper.parentElement.querySelector('#y').innerText = 'y: ' + Math.round(y);
+
+            let x_normalized = x / rect.width;
+            let [index, dataPoint] = viewSpaceToDataPoint(x_normalized, this._dataPoints);
+
+            this.graphPaper.parentElement.querySelector('#x').innerText = this._labelX + index;
+            this.graphPaper.parentElement.querySelector('#y').innerText = this._labelY + dataPoint.toFixed(2);
             //console.log(this.id + ', ' + x + ', ' + y + ', ' + x_view + ', ' + y_view);
+        }
+        else {
+            this.graphPaper.parentElement.querySelector('#x').innerText = '';
+            this.graphPaper.parentElement.querySelector('#y').innerText = '';
         }
     }
 
@@ -294,9 +317,13 @@ class Graph {
             gl.bindBuffer(gl.ARRAY_BUFFER, this.graph_VBO);
             gl.bufferData(gl.ARRAY_BUFFER, this._dataPoints, gl.STATIC_DRAW);
 
+            this.graph_transform.setScale(this._graphScale.h, this._graphScale.v, 1.0);
+            this.graph_transform.setTranslation(this._graphTranslation.x, this._graphTranslation.y, this._graphTranslation.z);
+
             gl.bindVertexArray(this.graph_VAO);
             gl.useProgram(graph_shader_program);
             gl.uniformMatrix4fv(gl.getUniformLocation(graph_shader_program, "u_viewMatrix"), true, view);
+            gl.uniformMatrix4fv(gl.getUniformLocation(graph_shader_program, "u_transformationMatrix"), true, this.graph_transform.data);
             gl.uniform4f(gl.getUniformLocation(graph_shader_program, "u_graphColor"), this._graphColor.r, this._graphColor.g, this._graphColor.b, this._graphColor.a);
             const n_vertices = n_chunks * chunkSize;
             gl.drawArrays(gl.LINE_STRIP, 0, n_vertices);

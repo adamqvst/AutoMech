@@ -17,7 +17,7 @@ let engine_param_selects = null;
 
 var rpm_data = [];
 var wave_data = [];
-const rpm_data_maxs_n_storedValues = 100;
+const rpm_data_maxs_n_storedValues = 500;
 const wave_data_max_n_storedChunks = 20;
 
 // time related variables
@@ -41,21 +41,32 @@ function init() {
     // Ensure that graphs are created AFTER initialization is completed
     initialize_graphs().then(() => {
         let graph_rpm = createGraph('graph-rpm', rpm_data, continuous_DPF, 15);
-        graph_rpm.setMaxChunks(100);
+        graph_rpm.setMaxChunks(500);
         graph_rpm.setGraphColor(0.0, 1.0, 0.25, 1.0);
+        graph_rpm.setGraphScale(1.0, 0.0003)
+        graph_rpm.setGraphTranslation(0, -0.9, 0);
+        graph_rpm.setLabelX('i: ');
+        graph_rpm.setLabelY('RPM: ');
+        graph_rpm.setCrosshairColor(1.0, 0.2, 0.2);
 
         let graph_a1 = createGraph('graph-audio-1', wave_data, chunked_DPF, 60);
         graph_a1.setMaxChunks(5);
         graph_a1.setGridColor(1.0, 1.0, 1.0, 1.0);
         graph_a1.setGraphColor(1.0, 1.0, 0.0, 1.0);
         graph_a1.setPaperColor(0.1, 0.1, 0.2, 1.0);
-        graph_a1.setGraphScale(2.0, 10.0);
+        graph_a1.setGraphScale(2.0, 0.0001);
+        graph_a1.setLabelX('i: ');
+        graph_a1.setLabelY('AMP: ');
+        graph_a1.setCrosshairColor(1.0, 0.2, 0.2);
 
         let graph_a2 = createGraph('graph-audio-2', wave_data, chunked_DPF, 15);
         graph_a2.setGridColor(0.5, 0.5, 0.5, 1.0);
         graph_a2.setGraphColor(1.0, 1.0, 0.0, 1.0);
         graph_a2.setPaperColor(0.1, 0.1, 0.2, 1.0);
-        graph_a2.setGraphScale(1.0, 10.0);
+        graph_a2.setGraphScale(1.0, 0.0001);
+        graph_a2.setLabelX('i: ');
+        graph_a2.setLabelY('AMP: ');
+        graph_a2.setCrosshairColor(1.0, 0.2, 0.2);
     });
 }
 
