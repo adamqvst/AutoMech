@@ -32,7 +32,7 @@ function handle_diagnostics_data(data) {
         rpm_data.push(jsonOBJ.rpm);
         wave_data.push(JSON.parse(jsonOBJ.wave));
 
-        if (rpm_data.length > rpm_data_maxs_n_storedValues) {
+        if (rpm_data.length > rpm_data_max_n_storedValues) {
             rpm_data.shift(); // removes first element from array
         }
 

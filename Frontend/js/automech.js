@@ -17,7 +17,7 @@ let engine_param_selects = null;
 
 var rpm_data = [];
 var wave_data = [];
-const rpm_data_maxs_n_storedValues = 500;
+const rpm_data_max_n_storedValues = 500;
 const wave_data_max_n_storedChunks = 20;
 
 // time related variables
